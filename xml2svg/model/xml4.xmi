@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ASCII"?>
+<modisco.xml:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modisco.xml="http://www.eclipse.org/MoDisco/Xml/0.1.incubation/XML" name="svg">
+  <children xsi:type="modisco.xml:Attribute" name="width" value="180"/>
+  <children xsi:type="modisco.xml:Attribute" name="height" value="200"/>
+  <children xsi:type="modisco.xml:Comment" name=" This is the element before translation and rotation are applied "/>
+  <children xsi:type="modisco.xml:Element" name="rect">
+    <children xsi:type="modisco.xml:Attribute" name="x" value="50"/>
+    <children xsi:type="modisco.xml:Attribute" name="y" value="50"/>
+    <children xsi:type="modisco.xml:Attribute" name="height" value="100"/>
+    <children xsi:type="modisco.xml:Attribute" name="width" value="100"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke" value="#000"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill" value="#0086B2"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill-opacity" value="0.2"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke-opacity" value="0.2"/>
+  </children>
+  <children xsi:type="modisco.xml:Comment" name=" Now we add a text element and apply rotate and translate to both "/>
+  <children xsi:type="modisco.xml:Element" name="rect">
+    <children xsi:type="modisco.xml:Attribute" name="x" value="50"/>
+    <children xsi:type="modisco.xml:Attribute" name="y" value="50"/>
+    <children xsi:type="modisco.xml:Attribute" name="height" value="100"/>
+    <children xsi:type="modisco.xml:Attribute" name="width" value="100"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke" value="#000"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill" value="#0086B2"/>
+    <children xsi:type="modisco.xml:Attribute" name="transform" value="translate(30) rotate(45 50 50)"/>
+  </children>
+  <children xsi:type="modisco.xml:Element" name="text">
+    <children xsi:type="modisco.xml:Attribute" name="x" value="60"/>
+    <children xsi:type="modisco.xml:Attribute" name="y" value="105"/>
+    <children xsi:type="modisco.xml:Attribute" name="transform" value="translate(30) rotate(45 50 50)"/>
+    <children xsi:type="modisco.xml:Text" name="Hello Moz!"/>
+  </children>
+  <namespaces name="" value="http://www.w3.org/2000/svg"/>
+  <namespaces name="xlink" value="http://www.w3.org/1999/xlink"/>
+</modisco.xml:Root>

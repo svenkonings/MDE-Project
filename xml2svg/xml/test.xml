@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="150" height="100" viewBox="0 0 3 2">
+  <defs>
+    <g id="testId">
+      <circle cx="0" cy="0" r="10" />
+    </g>
+  </defs>
+  <rect width="1" height="2" x="0" fill="#008d46" />
+  <rect width="1" height="2" x="1" fill="#ffffff" />
+  <rect width="1" height="2" x="2" fill="#d2232c" />
+  <text>
+  	This is a test.
+  </text>
+  <use x="10" y="10" href="url(#testId)" />
+</svg>

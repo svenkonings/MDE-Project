@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ASCII"?>
+<modisco.xml:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modisco.xml="http://www.eclipse.org/MoDisco/Xml/0.1.incubation/XML" name="svg">
+  <children xsi:type="modisco.xml:Attribute" name="width" value="150"/>
+  <children xsi:type="modisco.xml:Attribute" name="height" value="100"/>
+  <children xsi:type="modisco.xml:Attribute" name="viewBox" value="0 0 3 2"/>
+  <children xsi:type="modisco.xml:Element" name="defs">
+    <children xsi:type="modisco.xml:Element" name="g">
+      <children xsi:type="modisco.xml:Attribute" name="id" value="testId"/>
+      <children xsi:type="modisco.xml:Element" name="circle">
+        <children xsi:type="modisco.xml:Attribute" name="cx" value="0"/>
+        <children xsi:type="modisco.xml:Attribute" name="cy" value="0"/>
+        <children xsi:type="modisco.xml:Attribute" name="r" value="10"/>
+      </children>
+    </children>
+  </children>
+  <children xsi:type="modisco.xml:Element" name="rect">
+    <children xsi:type="modisco.xml:Attribute" name="width" value="1"/>
+    <children xsi:type="modisco.xml:Attribute" name="height" value="2"/>
+    <children xsi:type="modisco.xml:Attribute" name="x" value="0"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill" value="#008d46"/>
+  </children>
+  <children xsi:type="modisco.xml:Element" name="rect">
+    <children xsi:type="modisco.xml:Attribute" name="width" value="1"/>
+    <children xsi:type="modisco.xml:Attribute" name="height" value="2"/>
+    <children xsi:type="modisco.xml:Attribute" name="x" value="1"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill" value="#ffffff"/>
+  </children>
+  <children xsi:type="modisco.xml:Element" name="rect">
+    <children xsi:type="modisco.xml:Attribute" name="width" value="1"/>
+    <children xsi:type="modisco.xml:Attribute" name="height" value="2"/>
+    <children xsi:type="modisco.xml:Attribute" name="x" value="2"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill" value="#d2232c"/>
+  </children>
+  <children xsi:type="modisco.xml:Element" name="text">
+    <children xsi:type="modisco.xml:Text" name="This is a test."/>
+  </children>
+  <children xsi:type="modisco.xml:Element" name="use">
+    <children xsi:type="modisco.xml:Attribute" name="x" value="10"/>
+    <children xsi:type="modisco.xml:Attribute" name="y" value="10"/>
+    <children xsi:type="modisco.xml:Attribute" name="href" value="url(#testId)"/>
+  </children>
+  <namespaces name="" value="http://www.w3.org/2000/svg"/>
+</modisco.xml:Root>

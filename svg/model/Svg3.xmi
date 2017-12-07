@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg:Svg xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:svg="http://www.example.org/svg"
+    xsi:schemaLocation="http://www.example.org/svg svg.ecore">
+  <elements
+      xsi:type="svg:Defs">
+    <elements
+        xsi:type="svg:ClipPath"
+        name="myClip">
+      <graphicElements
+          xsi:type="svg:Circle">
+        <cx
+            number="30"/>
+        <cy
+            number="30"/>
+        <r number="20"/>
+      </graphicElements>
+      <graphicElements
+          xsi:type="svg:Circle">
+        <cx
+            number="70"/>
+        <cy
+            number="70"/>
+        <r number="20"/>
+      </graphicElements>
+    </elements>
+  </elements>
+  <elements
+      xsi:type="svg:Rect">
+    <attributes
+        xsi:type="svg:ClipPathAttribute">
+      <clipPath
+          elementName="myClip"/>
+    </attributes>
+    <x number="10"/>
+    <y number="10"/>
+    <width number="100"/>
+    <height
+        number="100"/>
+  </elements>
+  <width number="120"/>
+  <height number="120"/>
+</svg:Svg>

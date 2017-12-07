@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<modisco.xml:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modisco.xml="http://www.eclipse.org/MoDisco/Xml/0.1.incubation/XML" name="svg">
+  <children xsi:type="modisco.xml:Attribute" name="height" value="250"/>
+  <children xsi:type="modisco.xml:Attribute" name="width" value="500"/>
+  <children xsi:type="modisco.xml:Element" name="polygon">
+    <children xsi:type="modisco.xml:Attribute" name="points" value="220,10 300,210 170,250 123,234"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill" value="lime"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke" value="purple"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke-width" value="1"/>
+  </children>
+</modisco.xml:Root>

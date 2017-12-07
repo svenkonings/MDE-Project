@@ -1,0 +1,2047 @@
+-- @path postScript=/svg2eps/models/postScript.ecore
+-- @path svg=/svg2eps/models/svg.ecore
+
+module svg2eps;
+create OUT : postScript from IN : svg;
+
+-- Ignores: Use, ClipPath, Defs, Symbol, Image
+
+---------------------------------------------------
+-- Helpers
+---------------------------------------------------
+helper def: getElementById(id : String) : svg!Element =
+	svg!Element.allInstances()->select(e | e.name = id)->first();
+
+abstract rule Element {
+	from e : svg!Element
+	to save : postScript!Name(
+		value <- 'save'
+	),
+	restore : postScript!Name(
+		value <- 'restore'
+	)
+}
+
+helper context svg!Element def: encapsulateObjects(objs : Sequence(postScript!Object)) : Sequence(postScript!Object) = 
+	Sequence{thisModule.resolveTemp(self, 'save')}->union(
+	self.attributes->collect(a | a.settingsAsObjects())->flatten()->union(
+	objs->union(
+	Sequence{thisModule.resolveTemp(self, 'restore')}
+	)));
+	
+abstract rule GraphicElement extends Element {
+	from e : svg!Element
+	to strokeCondition : postScript!Name(
+		value <- 'doStroke'
+	),
+	strokeAction : postScript!Name(
+		value <- 'stroke'
+	),
+	strokeProc : postScript!Procedure(
+		objects <- Sequence{thisModule.resolveTemp(e, 'strokeAction')}
+	),
+	strokeIf : postScript!Name(
+		value <- 'if'
+	),
+	fillCondition : postScript!Name(
+		value <- 'doFill'
+	),
+	fillAction : postScript!Name(
+		value <- 'fill'
+	),
+	fillProc : postScript!Procedure(
+		objects <- Sequence{thisModule.resolveTemp(e, 'fillAction')}
+	),
+	fillIf : postScript!Name(
+		value <- 'if'
+	),
+	newPath : postScript!Name (
+		value <- 'newpath'	
+	),
+	closePath : postScript!Name (
+		value <- 'closepath'
+	)
+}
+
+helper context svg!GraphicElement def: encapsulatePath(objs : Sequence(postScript!Object)) : Sequence(postScript!Object) =
+	self.encapsulateObjects(Sequence{thisModule.resolveTemp(self, 'newPath')}->union(
+		objs->union(
+		Sequence{thisModule.resolveTemp(self, 'closePath')}->union(Sequence{thisModule.resolveTemp(self, 'strokeCondition'), thisModule.resolveTemp(self, 'strokeProc'), thisModule.resolveTemp(self, 'strokeIf'),
+	thisModule.resolveTemp(self, 'fillCondition'), thisModule.resolveTemp(self, 'fillProc'), thisModule.resolveTemp(self, 'fillIf')}))));
+	
+
+helper context svg!Svg def: minX : Integer =
+	if self.viewBox.oclIsUndefined() then
+		0
+	else
+		self.viewBox.minX.asPoints()
+	endif;
+
+helper context svg!Svg def: minY: Integer =
+	if self.viewBox.oclIsUndefined() then
+		0
+	else
+		self.viewBox.minY.asPoints()
+	endif;
+
+helper context svg!Svg def: boxWidth: Integer =
+	if self.viewBox.oclIsUndefined() then
+		self.width.lengthAsPoints()
+	else
+		self.viewBox.width.lengthAsPoints()
+	endif;
+
+helper context svg!Svg def: boxHeight: Integer =
+	if self.viewBox.oclIsUndefined() then
+		self.height.lengthAsPoints()
+	else
+		self.viewBox.height.lengthAsPoints()
+	endif;
+
+---------------------------------------------------
+-- Groupings
+---------------------------------------------------
+rule Start extends Element {
+	from e : svg!Svg (true)
+	to defaultFillKey : postScript!LiteralName(
+		value <- 'doFill'
+	), 
+	defaultFillValue : postScript!"Boolean"(
+		value <- true
+	),
+	defaultFillDef : postScript!Name(
+		value <- 'def'
+	),
+	defaultStrokeKey : postScript!LiteralName(
+		value <- 'doStroke'
+	),
+	defaultStrokeValue : postScript!"Boolean"(
+		value <- false
+	),
+	defaultStrokeDef : postScript!Name(
+		value <- 'def'
+	),
+	defaultFontSizeKey : postScript!LiteralName(
+		value <- 'fontSizePt'
+	),
+	defaultFontSizeValue : postScript!"Integer"(
+		value <- 16
+		-- Documentation is unclear on this value, since the default is
+		-- "medium", but this value resolves to 16px =~ 16pt in at least
+		-- firefox.
+	),
+	defaultFontSizeDef : postScript!Name(
+		value <- 'def'
+	),
+	p : postScript!Program (
+		lowerLeftX <- e.minX,
+		lowerLeftY <- e.minY + e.boxHeight,
+		upperRightX <- e.minX + e.boxWidth,
+		upperRightY <- e.minY,
+		object <- e.encapsulateObjects(Sequence{
+			thisModule.resolveTemp(e, 'defaultFillKey'), thisModule.resolveTemp(e, 'defaultFillValue'), thisModule.resolveTemp(e, 'defaultFillDef'),
+			thisModule.resolveTemp(e, 'defaultStrokeKey'), thisModule.resolveTemp(e, 'defaultStrokeValue'), thisModule.resolveTemp(e, 'defaultStrokeDef'),
+			thisModule.resolveTemp(e, 'defaultFontSizeKey'), thisModule.resolveTemp(e, 'defaultFontSizeValue'), thisModule.resolveTemp(e, 'defaultFontSizeDef')
+		}->union(e.elements->collect(x | x.asObjects())->flatten()))
+	)
+}
+
+helper context svg!Group def: asObjects(): Sequence(postScript!Object) =
+	self.encapsulateObjects(
+		self.elements->collect(x | x.asObjects())->flatten());
+
+helper context svg!ClipPath def: asObjects() : Sequence(postScript!Object) = Sequence{};
+helper context svg!Defs def: asObjects() : Sequence(postScript!Object) = Sequence{};
+
+---------------------------------------------------
+-- Shapes
+---------------------------------------------------
+rule Polygon extends GraphicElement {
+	from e : svg!Polygon
+}
+
+helper context svg!Polygon def: asObjects(): Sequence(postScript!Object) =
+	self.encapsulatePath(
+		self.points->first().asObjects().append(thisModule.PointMoveTo(self.points->first())).union(
+		self.points->subSequence(2, self.points->size())->collect(x | x.asObjects().append(thisModule.PointLineTo(x)))->flatten()
+		));
+
+rule Circle extends GraphicElement {
+	from e : svg!Circle
+	to coordX : postScript!"Integer" (
+		value <- e.cx.asPoints() + e.r.lengthAsPoints()
+	),
+	coordY : postScript!"Integer" (
+		value <- e.cy.asPoints()
+	),
+	moveTo : postScript!Name (
+		value <- 'moveto'
+	),
+	startAngle : postScript!"Integer" (
+		value <- 0	
+	),
+	stopAngle : postScript!"Integer" (
+		value <- 360
+	),
+	drawArc : postScript!Name (
+		value <- 'arc'
+	)
+}
+
+helper context svg!Circle def: asObjects(): Sequence(postScript!Object) =
+	self.encapsulatePath(
+		Sequence{
+			thisModule.resolveTemp(self, 'coordX'),
+			thisModule.resolveTemp(self, 'coordY'),
+			thisModule.resolveTemp(self, 'moveTo'),
+			self.cx, 
+			self.cy,
+			self.r,
+			thisModule.resolveTemp(self, 'startAngle'),
+			thisModule.resolveTemp(self, 'stopAngle'),
+			thisModule.resolveTemp(self, 'drawArc')
+			});
+
+rule Ellipse extends GraphicElement {
+	from e : svg!Ellipse
+	to scaleX : postScript!"Real" (
+		value <- e.cx.asPoints() * 1.0 / e.cy.asPoints()
+	),
+	scaleY : postScript!"Real" (
+		value <- 1.0
+	),
+	scale : postScript!Name (
+		value <- 'scale' -- Ellipse cannot contain other elements, so we may pollute the graphics state	
+	),
+	coordX : postScript!"Integer" (
+		value <- e.cx.asPoints() + e.r.lengthAsPoints()
+	),
+	coordY : postScript!"Integer" (
+		value <- e.cy.asPoints()
+	),
+	moveTo : postScript!Name (
+		value <- 'moveto'
+	),
+	startAngle : postScript!"Integer" (
+		value <- 0	
+	),
+	stopAngle : postScript!"Integer" (
+		value <- 360
+	),
+	drawArc : postScript!Name (
+		value <- 'arc'
+	)
+}
+
+helper context svg!Ellipse def: asObjects(): Sequence(postScript!Object) =
+	self.encapsulatePath(
+		Sequence{
+			thisModule.resolveTemp(self, 'scaleX'),
+			thisModule.resolveTemp(self, 'scaleY'),
+			thisModule.resolveTemp(self, 'scale'),
+			thisModule.resolveTemp(self, 'coordX'),
+			thisModule.resolveTemp(self, 'coordY'),
+			thisModule.resolveTemp(self, 'moveTo'),
+			thisModule.Coordinate(self.cx), 
+			thisModule.Coordinate(self.cy),
+			thisModule.Length(self.ry),
+			thisModule.resolveTemp(self, 'startAngle'),
+			thisModule.resolveTemp(self, 'stopAngle'),
+			thisModule.resolveTemp(self, 'drawArc')
+			});
+
+rule Line extends GraphicElement {
+	from e : svg!Line
+	to moveTo : postScript!Name (
+		value <- 'moveto'
+	),
+	lineTo : postScript!Name (
+		value <- 'lineto'
+	)
+}
+
+helper context svg!Line def: asObjects(): Sequence(postScript!Object) =
+	self.encapsulatePath(
+		self.x1.asObjects()->union(
+		self.y1.asObjects()->union(
+		Sequence{thisModule.resolveTemp(self, 'moveTo')}->union(
+		self.x2.asObjects()->union(
+		self.y2.asObjects()->union(
+		Sequence{thisModule.resolveTemp(self, 'lineTo')}
+		))))));
+
+rule Polyline extends GraphicElement {
+	from e : svg!Polyline
+}
+
+helper context svg!Polyline def: asObjects(): Sequence(postScript!Object) =
+	self.encapsulatePath(
+		self.points->first().asObjects().append(thisModule.PointMoveTo(self.points->first())).union(
+		self.points->subSequence(2, self.points->size())->collect(x | x.asObjects().append(thisModule.PointLineTo(x)))->flatten()
+		));
+
+rule Rect extends GraphicElement {
+	from e : svg!Rect
+	to tlx : postScript!"Integer" (
+		value <- e.x.asPoints()
+	),
+	tly : postScript!"Integer" (
+		value <- e.y.asPoints()
+	),
+	tlc : postScript!Name (
+		value <- 'moveto'
+	),
+	trx : postScript!"Integer" (
+		value <- e.x.asPoints() + e.width.lengthAsPoints()
+	),
+	try : postScript!"Integer" (
+		value <- e.y.asPoints()
+	),
+	trc : postScript!Name (
+		value <- 'lineto'
+	),
+	brx : postScript!"Integer" (
+		value <- e.x.asPoints() + e.width.lengthAsPoints()
+	),
+	bry : postScript!"Integer" (
+		value <- e.y.asPoints() + e.height.lengthAsPoints()
+	),
+	brc : postScript!Name (
+		value <- 'lineto'
+	),
+	blx : postScript!"Integer" (
+		value <- e.x.asPoints()
+	),
+	bly : postScript!"Integer" (
+		value <- e.y.asPoints() + e.height.lengthAsPoints()
+	),
+	blc : postScript!Name (
+		value <- 'lineto'
+	)
+}
+
+helper context svg!Rect def: asObjects(): Sequence(postScript!Object) =
+	self.encapsulatePath(Sequence{
+		thisModule.resolveTemp(self, 'tlx'),
+		thisModule.resolveTemp(self, 'tly'),
+		thisModule.resolveTemp(self, 'tlc'),
+		thisModule.resolveTemp(self, 'trx'),
+		thisModule.resolveTemp(self, 'try'),
+		thisModule.resolveTemp(self, 'trc'),
+		thisModule.resolveTemp(self, 'brx'),
+		thisModule.resolveTemp(self, 'bry'),
+		thisModule.resolveTemp(self, 'brc'),
+		thisModule.resolveTemp(self, 'blx'),
+		thisModule.resolveTemp(self, 'bly'),
+		thisModule.resolveTemp(self, 'blc')
+	});
+
+rule Text extends GraphicElement {
+	from e : svg!Text
+	to x : postScript!"Integer" (
+		value <- e.x.asPoints()
+	),
+	y : postScript!"Integer" (
+		value <- e.y.asPoints()
+	),
+	moveTo : postScript!Name (
+		value <- 'moveto'
+	),
+	show : postScript!"Name" (
+		value <- 'show'
+	)
+}
+
+helper context svg!Text def: asObjects() : Sequence(postScript!Object) =
+	self.encapsulatePath(Sequence{
+		thisModule.resolveTemp(self, 'x'),
+		thisModule.resolveTemp(self, 'y'),
+		thisModule.resolveTemp(self, 'moveTo'),
+		thisModule.resolveTemp(self, 'show')
+	});
+
+rule Path extends GraphicElement {
+	from e : svg!Path
+	to closePath : postScript!Name (
+		value <- 'closepath'
+	)
+}
+
+helper context svg!Path def: asObjects() : Sequence(postScript!Object) =
+	self.encapsulatePath(
+		self.path->collect(x | x.asObjects())->flatten().append(thisModule.resolveTemp(self, 'closePath'))
+	);
+
+rule AbsoluteMoveTo {
+	from e : svg!AbsoluteMoveTo
+	to x : postScript!"Integer" (
+		value <- e.x.intValue()
+	),
+	y : postScript!"Integer" (
+		value <- e.y.intValue()
+	),
+	moveTo : postScript!Name (
+		value <- 'moveto'
+	)
+}
+
+helper context svg!AbsoluteMoveTo def: asObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'x'),
+		thisModule.resolveTemp(self, 'y'),
+		thisModule.resolveTemp(self, 'moveTo')
+	};
+
+rule RelativeMoveTo {
+	from e : svg!RelativeMoveTo
+	to x : postScript!"Integer" (
+		value <- e.dx.intValue()
+	),
+	y : postScript!"Integer" (
+		value <- e.dy.intValue()
+	),
+	moveTo : postScript!Name (
+		value <- 'rmoveto'
+	)
+}
+
+helper context svg!RelativeMoveTo def: asObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'x'),
+		thisModule.resolveTemp(self, 'y'),
+		thisModule.resolveTemp(self, 'moveTo')
+	};
+
+rule AbsoluteLineTo {
+	from e : svg!AbsoluteLineTo
+	to x : postScript!"Integer" (
+		value <- e.x.intValue()
+	),
+	y : postScript!"Integer" (
+		value <- e.y.intValue()
+	),
+	lineTo : postScript!Name (
+		value <- 'lineto'
+	)
+}
+
+helper context svg!AbsoluteLineTo def: asObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'x'),
+		thisModule.resolveTemp(self, 'y'),
+		thisModule.resolveTemp(self, 'lineTo')
+	};
+
+rule RelativeLineTo {
+	from e : svg!RelativeLineTo
+	to x : postScript!"Integer" (
+		value <- e.dx.intValue()
+	),
+	y : postScript!"Integer" (
+		value <- e.dy.intValue()
+	),
+	lineTo : postScript!Name (
+		value <- 'rlineto'
+	)
+}
+
+helper context svg!RelativeLineTo def: asObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'x'),
+		thisModule.resolveTemp(self, 'y'),
+		thisModule.resolveTemp(self, 'lineTo')
+	};
+
+rule AbsoluteHorizontalLineTo {
+	from e : svg!AbsoluteHorizontalLineTo
+	to x : postScript!"Integer" (
+		value <- e.x.intValue()
+	),
+	currentPoint : postScript!Name (
+		value <- 'currentpoint'
+	),
+	exch : postScript!Name (
+		value <- 'exch'
+	),
+	pop : postScript!Name (
+		value <- 'pop'
+	),
+	lineTo : postScript!Name (
+		value <- 'lineto'
+	)
+}
+
+helper context svg!AbsoluteHorizontalLineTo def: asObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'x'), -- newX
+		thisModule.resolveTemp(self, 'currentPoint'), -- newX x y
+		thisModule.resolveTemp(self, 'exch'), -- newX y x
+		thisModule.resolveTemp(self, 'pop'), -- newX y
+		thisModule.resolveTemp(self, 'lineTo')
+	};
+
+rule RelativeHorizontalLineTo {
+	from e : svg!RelativeHorizontalLineTo
+	to x : postScript!"Integer" (
+		value <- e.dx.intValue()
+	),
+	y : postScript!"Integer" (
+		value <- 0
+	),
+	lineTo : postScript!Name (
+		value <- 'rlineto'
+	)
+}
+
+helper context svg!RelativeHorizontalLineTo def: asObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'x'),
+		thisModule.resolveTemp(self, 'y'),
+		thisModule.resolveTemp(self, 'lineTo')
+	};
+
+rule AbsoluteVerticalLineTo {
+	from e : svg!AbsoluteVerticalLineTo
+	to currentPoint : postScript!Name (
+		value <- 'currentpoint'
+	),
+	pop : postScript!Name (
+		value <- 'pop'
+	),
+	y : postScript!"Integer" (
+		value <- e.y.intValue()
+	),
+	lineTo : postScript!Name (
+		value <- 'lineto'
+	)
+}
+
+helper context svg!AbsoluteVerticalLineTo def: asObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'currentPoint'),
+		thisModule.resolveTemp(self, 'pop'),
+		thisModule.resolveTemp(self, 'y'),
+		thisModule.resolveTemp(self, 'lineTo')
+	};
+	
+rule RelativeVerticalLineTo {
+	from e : svg!RelativeVerticalLineTo
+	to x : postScript!"Integer" (
+		value <- 0
+	),
+	y : postScript!"Integer" (
+		value <- e.dy.intValue()
+	),
+	lineTo : postScript!Name (
+		value <- 'lineto'
+	)
+}
+
+helper context svg!RelativeVerticalLineTo def: asObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'x'),
+		thisModule.resolveTemp(self, 'y'),
+		thisModule.resolveTemp(self, 'lineTo')
+	};
+
+-- Quadratic curves are also described by cubic bezier curves where c1 == c2 == c
+rule AbsoluteQuadraticCurveTo {
+	from e : svg!AbsoluteQuadraticCurveTo
+	to cx1 : postScript!"Integer" (
+		value <- e.cx.intValue()
+	),
+	cy1 : postScript!"Integer" (
+		value <- e.cy.intValue()
+	),
+	cx2 : postScript!"Integer" (
+		value <- e.cx.intValue()
+	),
+	cy2 : postScript!"Integer" (
+		value <- e.cy.intValue()
+	),
+	x : postScript!"Integer" (
+		value <- e.x.intValue()
+	),
+	y : postScript!"Integer" (
+		value <- e.y.intValue()
+	),
+	curveTo : postScript!Name (
+		value <- 'curveto'	
+	)
+}
+
+helper context svg!AbsoluteQuadraticCurveTo def: asObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'cx1'),
+		thisModule.resolveTemp(self, 'cy1'),
+		thisModule.resolveTemp(self, 'cx2'),
+		thisModule.resolveTemp(self, 'cy2'),
+		thisModule.resolveTemp(self, 'x'),
+		thisModule.resolveTemp(self, 'y'),
+		thisModule.resolveTemp(self, 'curveTo')
+	};
+
+rule RelativeQuadraticCurveTo {
+	from e : svg!RelativeQuadraticCurveTo
+	to cx1 : postScript!"Integer" (
+		value <- e.dcx.intValue()
+	),
+	cy1 : postScript!"Integer" (
+		value <- e.dcy.intValue()
+	),
+	cx2 : postScript!"Integer" (
+		value <- e.dcx.intValue()
+	),
+	cy2 : postScript!"Integer" (
+		value <- e.dcy.intValue()
+	),
+	x : postScript!"Integer" (
+		value <- e.dx.intValue()
+	),
+	y : postScript!"Integer" (
+		value <- e.dy.intValue()
+	),
+	curveTo : postScript!Name (
+		value <- 'rcurveto'	
+	)
+}
+
+helper context svg!RelativeQuadraticCurveTo def: asObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'cx1'),
+		thisModule.resolveTemp(self, 'cy1'),
+		thisModule.resolveTemp(self, 'cx2'),
+		thisModule.resolveTemp(self, 'cy2'),
+		thisModule.resolveTemp(self, 'x'),
+		thisModule.resolveTemp(self, 'y'),
+		thisModule.resolveTemp(self, 'curveTo')
+	};
+
+rule AbsoluteCubicCurveTo {
+	from e : svg!AbsoluteCubicCurveTo
+	to cx1 : postScript!"Integer" (
+		value <- e.c1x.intValue()
+	),
+	cy1 : postScript!"Integer" (
+		value <- e.c1y.intValue()
+	),
+	cx2 : postScript!"Integer" (
+		value <- e.c2x.intValue()
+	),
+	cy2 : postScript!"Integer" (
+		value <- e.c2y.intValue()
+	),
+	x : postScript!"Integer" (
+		value <- e.x.intValue()
+	),
+	y : postScript!"Integer" (
+		value <- e.y.intValue()
+	),
+	curveTo : postScript!Name (
+		value <- 'curveto'
+	)
+}
+
+helper context svg!AbsoluteCubicCurveTo def: asObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'cx1'),
+		thisModule.resolveTemp(self, 'cy1'),
+		thisModule.resolveTemp(self, 'cx2'),
+		thisModule.resolveTemp(self, 'cy2'),
+		thisModule.resolveTemp(self, 'x'),
+		thisModule.resolveTemp(self, 'y'),
+		thisModule.resolveTemp(self, 'curveTo')
+	};
+
+rule RelativeCubicCurveTo {
+	from e : svg!RelativeCubicCurveTo
+	to cx1 : postScript!"Integer" (
+		value <- e.dc1x.intValue()
+	),
+	cy1 : postScript!"Integer" (
+		value <- e.dc1y.intValue()
+	),
+	cx2 : postScript!"Integer" (
+		value <- e.dc2x.intValue()
+	),
+	cy2 : postScript!"Integer" (
+		value <- e.dc2y.intValue()
+	),
+	x : postScript!"Integer" (
+		value <- e.dx.intValue()
+	),
+	y : postScript!"Integer" (
+		value <- e.dy.intValue()
+	),
+	curveTo : postScript!Name (
+		value <- 'rcurveto'	
+	)
+}
+
+helper context svg!RelativeCubicCurveTo def: asObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'cx1'),
+		thisModule.resolveTemp(self, 'cy1'),
+		thisModule.resolveTemp(self, 'cx2'),
+		thisModule.resolveTemp(self, 'cy2'),
+		thisModule.resolveTemp(self, 'x'),
+		thisModule.resolveTemp(self, 'y'),
+		thisModule.resolveTemp(self, 'curveTo')
+	};
+
+rule AbsoluteSmoothQuadraticCurveTo {
+	from e : svg!AbsoluteSmoothQuadraticCurveTo
+}
+
+helper context svg!AbsoluteSmoothQuadraticCurveTo def: asObjects() : Sequence(postScript!Object) = Sequence{};
+
+rule RelativeSmoothQuadraticCurveTo {
+	from e : svg!RelativeSmoothQuadraticCurveTo
+}
+
+helper context svg!RelativeSmoothQuadraticCurveTo def: asObjects() : Sequence(postScript!Object) = Sequence{};
+
+rule AbsoluteSmoothCubicCurveTo {
+	from e : svg!AbsoluteSmoothCubicCurveTo
+}
+
+helper context svg!AbsoluteSmoothCubicCurveTo def: asObjects() : Sequence(postScript!Object) = Sequence{};
+
+rule RelativeSmoothCubicCurveTo {
+	from e : svg!RelativeSmoothCubicCurveTo
+}
+
+helper context svg!RelativeSmoothCubicCurveTo def: asObjects() : Sequence(postScript!Object) = Sequence{};
+
+rule ClosePath {
+	from e : svg!ClosePath
+}
+
+helper context svg!ClosePath def: asObjects() : Sequence(postScript!Object) = Sequence{};
+
+---------------------------------------------------
+-- Types
+---------------------------------------------------
+helper def: toPoints(unit : svg!Unit, value : Integer) : Integer =
+	if unit = #cm then 
+		(value * 10.0 * 1000.0 / 352.7777).intValue()
+	else(
+	if unit = #px then
+		value.intValue() -- chosen dpi is 72.
+	else (
+	if unit = #pt then
+		value.intValue() -- font points are postscript points
+	else (
+	if unit = #em then
+		0 -- fuck
+	else (
+	if unit = #ex then
+		0
+	else
+		0
+	endif
+	)endif
+	)endif
+	)endif
+	)endif;
+
+unique lazy rule PointLineTo {
+	from p : svg!Point
+	to lineTo : postScript!Name (
+		value <- 'lineto'
+	)
+}
+
+unique lazy rule PointMoveTo {
+	from p : svg!Point
+	to moveTo : postScript!Name (
+		value <- 'moveto'
+	)
+}
+
+
+helper context svg!Point def: asObjects(): Sequence(postScript!Object) =
+	Sequence{self.x, self.y};
+
+rule Coordinate {
+	from c : svg!Coordinate 
+	to integer: postScript!"Integer" (
+		value <- c.asPoints()
+	)
+}
+
+helper context svg!Coordinate def: asPoints() : Integer = 
+	thisModule.toPoints(self.unit, self.number);
+
+rule Length {
+	from l : svg!Length
+	to integer : postScript!"Integer" (
+		value <- l.lengthAsPoints()
+	)
+}
+
+helper context svg!Length def: lengthAsPoints() : Integer =
+	thisModule.toPoints(self.unit, self.number);
+
+rule NonePaint {
+	from p : svg!NonePaint
+	to r : postScript!"Real" (
+		value <- 0
+	),
+	g : postScript!"Real" (
+		value <- 0
+	),
+	b : postScript!"Real" (
+		value <- 0
+	)
+}
+
+helper context svg!NonePaint def: asRGB() : Sequence(postScript!"Real") =
+	Sequence{
+		thisModule.resolveTemp(self, 'r'),
+		thisModule.resolveTemp(self, 'g'),
+		thisModule.resolveTemp(self, 'b')
+	};
+
+rule RGBColor {
+	from p : svg!RbgColor
+	to r : postScript!"Real" (
+		value <- p.r.intValue() / 255.0
+	),
+	g : postScript!"Real" (
+		value <- p.g.intValue() / 255.0
+	),
+	b : postScript!"Real" (
+		value <- p.b.intValue() / 255.0
+	)
+}
+
+helper context svg!RbgColor def: asRGB() : Sequence(postScript!"Real") =
+	Sequence{
+		thisModule.resolveTemp(self, 'r'),
+		thisModule.resolveTemp(self, 'g'),
+		thisModule.resolveTemp(self, 'b')
+	};
+	
+helper def: keywordRed(kw : svg!ColorKeyword) : Real =
+    if kw = #aliceblue then
+        0.9411764705882353
+    else (if kw = #antiquewhite then
+        0.9803921568627451
+    else (if kw = #aqua then
+        0.0
+    else (if kw = #aquamarine then
+        0.4980392156862745
+    else (if kw = #azure then
+        0.9411764705882353
+    else (if kw = #beige then
+        0.9607843137254902
+    else (if kw = #bisque then
+        1.0
+    else (if kw = #black then
+        0.0
+    else (if kw = #blanchedalmond then
+        1.0
+    else (if kw = #blue then
+        0.0
+    else (if kw = #blueviolet then
+        0.5411764705882353
+    else (if kw = #brown then
+        0.6470588235294118
+    else (if kw = #burlywood then
+        0.8705882352941177
+    else (if kw = #cadetblue then
+        0.37254901960784315
+    else (if kw = #chartreuse then
+        0.4980392156862745
+    else (if kw = #chocolate then
+        0.8235294117647058
+    else (if kw = #coral then
+        1.0
+    else (if kw = #cornflowerblue then
+        0.39215686274509803
+    else (if kw = #cornsilk then
+        1.0
+    else (if kw = #crimson then
+        0.8627450980392157
+    else (if kw = #cyan then
+        0.0
+    else (if kw = #darkblue then
+        0.0
+    else (if kw = #darkcyan then
+        0.0
+    else (if kw = #darkgoldenrod then
+        0.7215686274509804
+    else (if kw = #darkgray then
+        0.6627450980392157
+    else (if kw = #darkgreen then
+        0.0
+    else (if kw = #darkgrey then
+        0.6627450980392157
+    else (if kw = #darkkhaki then
+        0.7411764705882353
+    else (if kw = #darkmagenta then
+        0.5450980392156862
+    else (if kw = #darkolivegreen then
+        0.3333333333333333
+    else (if kw = #darkorange then
+        1.0
+    else (if kw = #darkorchid then
+        0.6
+    else (if kw = #darkred then
+        0.5450980392156862
+    else (if kw = #darksalmon then
+        0.9137254901960784
+    else (if kw = #darkseagreen then
+        0.5607843137254902
+    else (if kw = #darkslateblue then
+        0.2823529411764706
+    else (if kw = #darkslategray then
+        0.1843137254901961
+    else (if kw = #darkslategrey then
+        0.1843137254901961
+    else (if kw = #darkturquoise then
+        0.0
+    else (if kw = #darkviolet then
+        0.5803921568627451
+    else (if kw = #deeppink then
+        1.0
+    else (if kw = #deepskyblue then
+        0.0
+    else (if kw = #dimgray then
+        0.4117647058823529
+    else (if kw = #dimgrey then
+        0.4117647058823529
+    else (if kw = #dodgerblue then
+        0.11764705882352941
+    else (if kw = #firebrick then
+        0.6980392156862745
+    else (if kw = #floralwhite then
+        1.0
+    else (if kw = #forestgreen then
+        0.13333333333333333
+    else (if kw = #fuchsia then
+        1.0
+    else (if kw = #gainsboro then
+        0.8627450980392157
+    else (if kw = #ghostwhite then
+        0.9725490196078431
+    else (if kw = #gold then
+        1.0
+    else (if kw = #goldenrod then
+        0.8549019607843137
+    else (if kw = #gray then
+        0.5019607843137255
+    else (if kw = #grey then
+        0.5019607843137255
+    else (if kw = #green then
+        0.0
+    else (if kw = #greenyellow then
+        0.6784313725490196
+    else (if kw = #honeydew then
+        0.9411764705882353
+    else (if kw = #hotpink then
+        1.0
+    else (if kw = #indianred then
+        0.803921568627451
+    else (if kw = #indigo then
+        0.29411764705882354
+    else (if kw = #ivory then
+        1.0
+    else (if kw = #khaki then
+        0.9411764705882353
+    else (if kw = #lavender then
+        0.9019607843137255
+    else (if kw = #lavenderblush then
+        1.0
+    else (if kw = #lawngreen then
+        0.48627450980392156
+    else (if kw = #lemonchiffon then
+        1.0
+    else (if kw = #lightblue then
+        0.6784313725490196
+    else (if kw = #lightcoral then
+        0.9411764705882353
+    else (if kw = #lightcyan then
+        0.8784313725490196
+    else (if kw = #lightgoldenrodyellow then
+        0.9803921568627451
+    else (if kw = #lightgray then
+        0.8274509803921568
+    else (if kw = #lightgreen then
+        0.5647058823529412
+    else (if kw = #lightgrey then
+        0.8274509803921568
+    else (if kw = #lightpink then
+        1.0
+    else (if kw = #lightsalmon then
+        1.0
+    else (if kw = #lightseagreen then
+        0.12549019607843137
+    else (if kw = #lightskyblue then
+        0.5294117647058824
+    else (if kw = #lightslategray then
+        0.4666666666666667
+    else (if kw = #lightslategrey then
+        0.4666666666666667
+    else (if kw = #lightsteelblue then
+        0.6901960784313725
+    else (if kw = #lightyellow then
+        1.0
+    else (if kw = #lime then
+        0.0
+    else (if kw = #limegreen then
+        0.19607843137254902
+    else (if kw = #linen then
+        0.9803921568627451
+    else (if kw = #magenta then
+        1.0
+    else (if kw = #maroon then
+        0.5019607843137255
+    else (if kw = #mediumaquamarine then
+        0.4
+    else (if kw = #mediumblue then
+        0.0
+    else (if kw = #mediumorchid then
+        0.7294117647058823
+    else (if kw = #mediumpurple then
+        0.5764705882352941
+    else (if kw = #mediumseagreen then
+        0.23529411764705882
+    else (if kw = #mediumslateblue then
+        0.4823529411764706
+    else (if kw = #mediumspringgreen then
+        0.0
+    else (if kw = #mediumturquoise then
+        0.2823529411764706
+    else (if kw = #mediumvioletred then
+        0.7803921568627451
+    else (if kw = #midnightblue then
+        0.09803921568627451
+    else (if kw = #mintcream then
+        0.9607843137254902
+    else (if kw = #mistyrose then
+        1.0
+    else (if kw = #moccasin then
+        1.0
+    else (if kw = #navajowhite then
+        1.0
+    else (if kw = #navy then
+        0.0
+    else (if kw = #oldlace then
+        0.9921568627450981
+    else (if kw = #olive then
+        0.5019607843137255
+    else (if kw = #olivedrab then
+        0.4196078431372549
+    else (if kw = #orange then
+        1.0
+    else (if kw = #orangered then
+        1.0
+    else (if kw = #orchid then
+        0.8549019607843137
+    else (if kw = #palegoldenrod then
+        0.9333333333333333
+    else (if kw = #palegreen then
+        0.596078431372549
+    else (if kw = #paleturquoise then
+        0.6862745098039216
+    else (if kw = #palevioletred then
+        0.8588235294117647
+    else (if kw = #papayawhip then
+        1.0
+    else (if kw = #peachpuff then
+        1.0
+    else (if kw = #peru then
+        0.803921568627451
+    else (if kw = #pink then
+        1.0
+    else (if kw = #plum then
+        0.8666666666666667
+    else (if kw = #powderblue then
+        0.6901960784313725
+    else (if kw = #purple then
+        0.5019607843137255
+    else (if kw = #red then
+        1.0
+    else (if kw = #rosybrown then
+        0.7372549019607844
+    else (if kw = #royalblue then
+        0.2549019607843137
+    else (if kw = #saddlebrown then
+        0.5450980392156862
+    else (if kw = #salmon then
+        0.9803921568627451
+    else (if kw = #sandybrown then
+        0.9568627450980393
+    else (if kw = #seagreen then
+        0.1803921568627451
+    else (if kw = #seashell then
+        1.0
+    else (if kw = #sienna then
+        0.6274509803921569
+    else (if kw = #silver then
+        0.7529411764705882
+    else (if kw = #skyblue then
+        0.5294117647058824
+    else (if kw = #slateblue then
+        0.41568627450980394
+    else (if kw = #slategray then
+        0.4392156862745098
+    else (if kw = #slategrey then
+        0.4392156862745098
+    else (if kw = #snow then
+        1.0
+    else (if kw = #springgreen then
+        0.0
+    else (if kw = #steelblue then
+        0.27450980392156865
+    else (if kw = #tan then
+        0.8235294117647058
+    else (if kw = #teal then
+        0.0
+    else (if kw = #thistle then
+        0.8470588235294118
+    else (if kw = #tomato then
+        1.0
+    else (if kw = #turquoise then
+        0.25098039215686274
+    else (if kw = #violet then
+        0.9333333333333333
+    else (if kw = #wheat then
+        0.9607843137254902
+    else (if kw = #white then
+        1.0
+    else (if kw = #whitesmoke then
+        0.9607843137254902
+    else (if kw = #yellow then
+        1.0
+    else (if kw = #yellowgreen then
+        0.6039215686274509
+    else (
+    0.0
+    ) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif;
+
+helper def: keywordGreen(kw : svg!ColorKeyword) : Real =
+    if kw = #aliceblue then
+        0.9725490196078431
+    else (if kw = #antiquewhite then
+        0.9215686274509803
+    else (if kw = #aqua then
+        1.0
+    else (if kw = #aquamarine then
+        1.0
+    else (if kw = #azure then
+        1.0
+    else (if kw = #beige then
+        0.9607843137254902
+    else (if kw = #bisque then
+        0.8941176470588236
+    else (if kw = #black then
+        0.0
+    else (if kw = #blanchedalmond then
+        0.9215686274509803
+    else (if kw = #blue then
+        0.0
+    else (if kw = #blueviolet then
+        0.16862745098039217
+    else (if kw = #brown then
+        0.16470588235294117
+    else (if kw = #burlywood then
+        0.7215686274509804
+    else (if kw = #cadetblue then
+        0.6196078431372549
+    else (if kw = #chartreuse then
+        1.0
+    else (if kw = #chocolate then
+        0.4117647058823529
+    else (if kw = #coral then
+        0.4980392156862745
+    else (if kw = #cornflowerblue then
+        0.5843137254901961
+    else (if kw = #cornsilk then
+        0.9725490196078431
+    else (if kw = #crimson then
+        0.0784313725490196
+    else (if kw = #cyan then
+        1.0
+    else (if kw = #darkblue then
+        0.0
+    else (if kw = #darkcyan then
+        0.5450980392156862
+    else (if kw = #darkgoldenrod then
+        0.5254901960784314
+    else (if kw = #darkgray then
+        0.6627450980392157
+    else (if kw = #darkgreen then
+        0.39215686274509803
+    else (if kw = #darkgrey then
+        0.6627450980392157
+    else (if kw = #darkkhaki then
+        0.7176470588235294
+    else (if kw = #darkmagenta then
+        0.0
+    else (if kw = #darkolivegreen then
+        0.4196078431372549
+    else (if kw = #darkorange then
+        0.5490196078431373
+    else (if kw = #darkorchid then
+        0.19607843137254902
+    else (if kw = #darkred then
+        0.0
+    else (if kw = #darksalmon then
+        0.5882352941176471
+    else (if kw = #darkseagreen then
+        0.7372549019607844
+    else (if kw = #darkslateblue then
+        0.23921568627450981
+    else (if kw = #darkslategray then
+        0.30980392156862746
+    else (if kw = #darkslategrey then
+        0.30980392156862746
+    else (if kw = #darkturquoise then
+        0.807843137254902
+    else (if kw = #darkviolet then
+        0.0
+    else (if kw = #deeppink then
+        0.0784313725490196
+    else (if kw = #deepskyblue then
+        0.7490196078431373
+    else (if kw = #dimgray then
+        0.4117647058823529
+    else (if kw = #dimgrey then
+        0.4117647058823529
+    else (if kw = #dodgerblue then
+        0.5647058823529412
+    else (if kw = #firebrick then
+        0.13333333333333333
+    else (if kw = #floralwhite then
+        0.9803921568627451
+    else (if kw = #forestgreen then
+        0.5450980392156862
+    else (if kw = #fuchsia then
+        0.0
+    else (if kw = #gainsboro then
+        0.8627450980392157
+    else (if kw = #ghostwhite then
+        0.9725490196078431
+    else (if kw = #gold then
+        0.8431372549019608
+    else (if kw = #goldenrod then
+        0.6470588235294118
+    else (if kw = #gray then
+        0.5019607843137255
+    else (if kw = #grey then
+        0.5019607843137255
+    else (if kw = #green then
+        0.5019607843137255
+    else (if kw = #greenyellow then
+        1.0
+    else (if kw = #honeydew then
+        1.0
+    else (if kw = #hotpink then
+        0.4117647058823529
+    else (if kw = #indianred then
+        0.3607843137254902
+    else (if kw = #indigo then
+        0.0
+    else (if kw = #ivory then
+        1.0
+    else (if kw = #khaki then
+        0.9019607843137255
+    else (if kw = #lavender then
+        0.9019607843137255
+    else (if kw = #lavenderblush then
+        0.9411764705882353
+    else (if kw = #lawngreen then
+        0.9882352941176471
+    else (if kw = #lemonchiffon then
+        0.9803921568627451
+    else (if kw = #lightblue then
+        0.8470588235294118
+    else (if kw = #lightcoral then
+        0.5019607843137255
+    else (if kw = #lightcyan then
+        1.0
+    else (if kw = #lightgoldenrodyellow then
+        0.9803921568627451
+    else (if kw = #lightgray then
+        0.8274509803921568
+    else (if kw = #lightgreen then
+        0.9333333333333333
+    else (if kw = #lightgrey then
+        0.8274509803921568
+    else (if kw = #lightpink then
+        0.7137254901960784
+    else (if kw = #lightsalmon then
+        0.6274509803921569
+    else (if kw = #lightseagreen then
+        0.6980392156862745
+    else (if kw = #lightskyblue then
+        0.807843137254902
+    else (if kw = #lightslategray then
+        0.5333333333333333
+    else (if kw = #lightslategrey then
+        0.5333333333333333
+    else (if kw = #lightsteelblue then
+        0.7686274509803922
+    else (if kw = #lightyellow then
+        1.0
+    else (if kw = #lime then
+        1.0
+    else (if kw = #limegreen then
+        0.803921568627451
+    else (if kw = #linen then
+        0.9411764705882353
+    else (if kw = #magenta then
+        0.0
+    else (if kw = #maroon then
+        0.0
+    else (if kw = #mediumaquamarine then
+        0.803921568627451
+    else (if kw = #mediumblue then
+        0.0
+    else (if kw = #mediumorchid then
+        0.3333333333333333
+    else (if kw = #mediumpurple then
+        0.4392156862745098
+    else (if kw = #mediumseagreen then
+        0.7019607843137254
+    else (if kw = #mediumslateblue then
+        0.40784313725490196
+    else (if kw = #mediumspringgreen then
+        0.9803921568627451
+    else (if kw = #mediumturquoise then
+        0.8196078431372549
+    else (if kw = #mediumvioletred then
+        0.08235294117647059
+    else (if kw = #midnightblue then
+        0.09803921568627451
+    else (if kw = #mintcream then
+        1.0
+    else (if kw = #mistyrose then
+        0.8941176470588236
+    else (if kw = #moccasin then
+        0.8941176470588236
+    else (if kw = #navajowhite then
+        0.8705882352941177
+    else (if kw = #navy then
+        0.0
+    else (if kw = #oldlace then
+        0.9607843137254902
+    else (if kw = #olive then
+        0.5019607843137255
+    else (if kw = #olivedrab then
+        0.5568627450980392
+    else (if kw = #orange then
+        0.6470588235294118
+    else (if kw = #orangered then
+        0.27058823529411763
+    else (if kw = #orchid then
+        0.4392156862745098
+    else (if kw = #palegoldenrod then
+        0.9098039215686274
+    else (if kw = #palegreen then
+        0.984313725490196
+    else (if kw = #paleturquoise then
+        0.9333333333333333
+    else (if kw = #palevioletred then
+        0.4392156862745098
+    else (if kw = #papayawhip then
+        0.9372549019607843
+    else (if kw = #peachpuff then
+        0.8549019607843137
+    else (if kw = #peru then
+        0.5215686274509804
+    else (if kw = #pink then
+        0.7529411764705882
+    else (if kw = #plum then
+        0.6274509803921569
+    else (if kw = #powderblue then
+        0.8784313725490196
+    else (if kw = #purple then
+        0.0
+    else (if kw = #red then
+        0.0
+    else (if kw = #rosybrown then
+        0.5607843137254902
+    else (if kw = #royalblue then
+        0.4117647058823529
+    else (if kw = #saddlebrown then
+        0.27058823529411763
+    else (if kw = #salmon then
+        0.5019607843137255
+    else (if kw = #sandybrown then
+        0.6431372549019608
+    else (if kw = #seagreen then
+        0.5450980392156862
+    else (if kw = #seashell then
+        0.9607843137254902
+    else (if kw = #sienna then
+        0.3215686274509804
+    else (if kw = #silver then
+        0.7529411764705882
+    else (if kw = #skyblue then
+        0.807843137254902
+    else (if kw = #slateblue then
+        0.35294117647058826
+    else (if kw = #slategray then
+        0.5019607843137255
+    else (if kw = #slategrey then
+        0.5019607843137255
+    else (if kw = #snow then
+        0.9803921568627451
+    else (if kw = #springgreen then
+        1.0
+    else (if kw = #steelblue then
+        0.5098039215686274
+    else (if kw = #tan then
+        0.7058823529411765
+    else (if kw = #teal then
+        0.5019607843137255
+    else (if kw = #thistle then
+        0.7490196078431373
+    else (if kw = #tomato then
+        0.38823529411764707
+    else (if kw = #turquoise then
+        0.8784313725490196
+    else (if kw = #violet then
+        0.5098039215686274
+    else (if kw = #wheat then
+        0.8705882352941177
+    else (if kw = #white then
+        1.0
+    else (if kw = #whitesmoke then
+        0.9607843137254902
+    else (if kw = #yellow then
+        1.0
+    else (if kw = #yellowgreen then
+        0.803921568627451
+    else (
+    0.0
+    ) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif;
+
+helper def: keywordBlue(kw : svg!ColorKeyword) : Real =
+    if kw = #aliceblue then
+        1.0
+    else (if kw = #antiquewhite then
+        0.8431372549019608
+    else (if kw = #aqua then
+        1.0
+    else (if kw = #aquamarine then
+        0.8313725490196079
+    else (if kw = #azure then
+        1.0
+    else (if kw = #beige then
+        0.8627450980392157
+    else (if kw = #bisque then
+        0.7686274509803922
+    else (if kw = #black then
+        0.0
+    else (if kw = #blanchedalmond then
+        0.803921568627451
+    else (if kw = #blue then
+        1.0
+    else (if kw = #blueviolet then
+        0.8862745098039215
+    else (if kw = #brown then
+        0.16470588235294117
+    else (if kw = #burlywood then
+        0.5294117647058824
+    else (if kw = #cadetblue then
+        0.6274509803921569
+    else (if kw = #chartreuse then
+        0.0
+    else (if kw = #chocolate then
+        0.11764705882352941
+    else (if kw = #coral then
+        0.3137254901960784
+    else (if kw = #cornflowerblue then
+        0.9294117647058824
+    else (if kw = #cornsilk then
+        0.8627450980392157
+    else (if kw = #crimson then
+        0.23529411764705882
+    else (if kw = #cyan then
+        1.0
+    else (if kw = #darkblue then
+        0.5450980392156862
+    else (if kw = #darkcyan then
+        0.5450980392156862
+    else (if kw = #darkgoldenrod then
+        0.043137254901960784
+    else (if kw = #darkgray then
+        0.6627450980392157
+    else (if kw = #darkgreen then
+        0.0
+    else (if kw = #darkgrey then
+        0.6627450980392157
+    else (if kw = #darkkhaki then
+        0.4196078431372549
+    else (if kw = #darkmagenta then
+        0.5450980392156862
+    else (if kw = #darkolivegreen then
+        0.1843137254901961
+    else (if kw = #darkorange then
+        0.0
+    else (if kw = #darkorchid then
+        0.8
+    else (if kw = #darkred then
+        0.0
+    else (if kw = #darksalmon then
+        0.47843137254901963
+    else (if kw = #darkseagreen then
+        0.5607843137254902
+    else (if kw = #darkslateblue then
+        0.5450980392156862
+    else (if kw = #darkslategray then
+        0.30980392156862746
+    else (if kw = #darkslategrey then
+        0.30980392156862746
+    else (if kw = #darkturquoise then
+        0.8196078431372549
+    else (if kw = #darkviolet then
+        0.8274509803921568
+    else (if kw = #deeppink then
+        0.5764705882352941
+    else (if kw = #deepskyblue then
+        1.0
+    else (if kw = #dimgray then
+        0.4117647058823529
+    else (if kw = #dimgrey then
+        0.4117647058823529
+    else (if kw = #dodgerblue then
+        1.0
+    else (if kw = #firebrick then
+        0.13333333333333333
+    else (if kw = #floralwhite then
+        0.9411764705882353
+    else (if kw = #forestgreen then
+        0.13333333333333333
+    else (if kw = #fuchsia then
+        1.0
+    else (if kw = #gainsboro then
+        0.8627450980392157
+    else (if kw = #ghostwhite then
+        1.0
+    else (if kw = #gold then
+        0.0
+    else (if kw = #goldenrod then
+        0.12549019607843137
+    else (if kw = #gray then
+        0.5019607843137255
+    else (if kw = #grey then
+        0.5019607843137255
+    else (if kw = #green then
+        0.0
+    else (if kw = #greenyellow then
+        0.1843137254901961
+    else (if kw = #honeydew then
+        0.9411764705882353
+    else (if kw = #hotpink then
+        0.7058823529411765
+    else (if kw = #indianred then
+        0.3607843137254902
+    else (if kw = #indigo then
+        0.5098039215686274
+    else (if kw = #ivory then
+        0.9411764705882353
+    else (if kw = #khaki then
+        0.5490196078431373
+    else (if kw = #lavender then
+        0.9803921568627451
+    else (if kw = #lavenderblush then
+        0.9607843137254902
+    else (if kw = #lawngreen then
+        0.0
+    else (if kw = #lemonchiffon then
+        0.803921568627451
+    else (if kw = #lightblue then
+        0.9019607843137255
+    else (if kw = #lightcoral then
+        0.5019607843137255
+    else (if kw = #lightcyan then
+        1.0
+    else (if kw = #lightgoldenrodyellow then
+        0.8235294117647058
+    else (if kw = #lightgray then
+        0.8274509803921568
+    else (if kw = #lightgreen then
+        0.5647058823529412
+    else (if kw = #lightgrey then
+        0.8274509803921568
+    else (if kw = #lightpink then
+        0.7568627450980392
+    else (if kw = #lightsalmon then
+        0.47843137254901963
+    else (if kw = #lightseagreen then
+        0.6666666666666666
+    else (if kw = #lightskyblue then
+        0.9803921568627451
+    else (if kw = #lightslategray then
+        0.6
+    else (if kw = #lightslategrey then
+        0.6
+    else (if kw = #lightsteelblue then
+        0.8705882352941177
+    else (if kw = #lightyellow then
+        0.8784313725490196
+    else (if kw = #lime then
+        0.0
+    else (if kw = #limegreen then
+        0.19607843137254902
+    else (if kw = #linen then
+        0.9019607843137255
+    else (if kw = #magenta then
+        1.0
+    else (if kw = #maroon then
+        0.0
+    else (if kw = #mediumaquamarine then
+        0.6666666666666666
+    else (if kw = #mediumblue then
+        0.803921568627451
+    else (if kw = #mediumorchid then
+        0.8274509803921568
+    else (if kw = #mediumpurple then
+        0.8588235294117647
+    else (if kw = #mediumseagreen then
+        0.44313725490196076
+    else (if kw = #mediumslateblue then
+        0.9333333333333333
+    else (if kw = #mediumspringgreen then
+        0.6039215686274509
+    else (if kw = #mediumturquoise then
+        0.8
+    else (if kw = #mediumvioletred then
+        0.5215686274509804
+    else (if kw = #midnightblue then
+        0.4392156862745098
+    else (if kw = #mintcream then
+        0.9803921568627451
+    else (if kw = #mistyrose then
+        0.8823529411764706
+    else (if kw = #moccasin then
+        0.7098039215686275
+    else (if kw = #navajowhite then
+        0.6784313725490196
+    else (if kw = #navy then
+        0.5019607843137255
+    else (if kw = #oldlace then
+        0.9019607843137255
+    else (if kw = #olive then
+        0.0
+    else (if kw = #olivedrab then
+        0.13725490196078433
+    else (if kw = #orange then
+        0.0
+    else (if kw = #orangered then
+        0.0
+    else (if kw = #orchid then
+        0.8392156862745098
+    else (if kw = #palegoldenrod then
+        0.6666666666666666
+    else (if kw = #palegreen then
+        0.596078431372549
+    else (if kw = #paleturquoise then
+        0.9333333333333333
+    else (if kw = #palevioletred then
+        0.5764705882352941
+    else (if kw = #papayawhip then
+        0.8352941176470589
+    else (if kw = #peachpuff then
+        0.7254901960784313
+    else (if kw = #peru then
+        0.24705882352941178
+    else (if kw = #pink then
+        0.796078431372549
+    else (if kw = #plum then
+        0.8666666666666667
+    else (if kw = #powderblue then
+        0.9019607843137255
+    else (if kw = #purple then
+        0.5019607843137255
+    else (if kw = #red then
+        0.0
+    else (if kw = #rosybrown then
+        0.5607843137254902
+    else (if kw = #royalblue then
+        0.8823529411764706
+    else (if kw = #saddlebrown then
+        0.07450980392156863
+    else (if kw = #salmon then
+        0.4470588235294118
+    else (if kw = #sandybrown then
+        0.3764705882352941
+    else (if kw = #seagreen then
+        0.3411764705882353
+    else (if kw = #seashell then
+        0.9333333333333333
+    else (if kw = #sienna then
+        0.17647058823529413
+    else (if kw = #silver then
+        0.7529411764705882
+    else (if kw = #skyblue then
+        0.9215686274509803
+    else (if kw = #slateblue then
+        0.803921568627451
+    else (if kw = #slategray then
+        0.5647058823529412
+    else (if kw = #slategrey then
+        0.5647058823529412
+    else (if kw = #snow then
+        0.9803921568627451
+    else (if kw = #springgreen then
+        0.4980392156862745
+    else (if kw = #steelblue then
+        0.7058823529411765
+    else (if kw = #tan then
+        0.5490196078431373
+    else (if kw = #teal then
+        0.5019607843137255
+    else (if kw = #thistle then
+        0.8470588235294118
+    else (if kw = #tomato then
+        0.2784313725490196
+    else (if kw = #turquoise then
+        0.8156862745098039
+    else (if kw = #violet then
+        0.9333333333333333
+    else (if kw = #wheat then
+        0.7019607843137254
+    else (if kw = #white then
+        1.0
+    else (if kw = #whitesmoke then
+        0.9607843137254902
+    else (if kw = #yellow then
+        0.0
+    else (if kw = #yellowgreen then
+        0.19607843137254902
+    else (
+    0.0
+    ) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif) endif;
+
+rule KeywordColor {
+	from kw : svg!KeywordColor
+	to r : postScript!"Real" (
+		value <- thisModule.keywordRed(kw.keyword)
+	),
+	g : postScript!"Real" (
+		value <- thisModule.keywordGreen(kw.keyword)
+	),
+	b : postScript!"Real" (
+		value <- thisModule.keywordBlue(kw.keyword)
+	)
+}
+
+helper context svg!KeywordColor def: asRGB() : Sequence(postScript!"Real") =
+	Sequence{
+		thisModule.resolveTemp(self, 'r'),
+		thisModule.resolveTemp(self, 'g'),
+		thisModule.resolveTemp(self, 'b')
+	};
+
+rule HexColor {
+	from hc : svg!HexColor
+	to r : postScript!"Real" (
+		value <- 0.0
+	),
+	g : postScript!"Real" (
+		value <- 0.0
+	),
+	b : postScript!"Real" (
+		value <- 0.0
+	)
+}
+	
+helper context svg!HexColor def: asRGB() : Sequence(postScript!"Real") = 
+	Sequence{
+		thisModule.resolveTemp(self, 'r'),
+		thisModule.resolveTemp(self, 'g'),
+		thisModule.resolveTemp(self, 'b')
+	};
+	
+---------------------------------------------------
+-- Attributes
+---------------------------------------------------
+
+rule StrokeWidth {
+	from sw : svg!StrokeWidth
+	to width : postScript!"Integer" (
+		value <- sw.strokeWidth.intValue()
+	),
+	setlinewidth : postScript!"Name" (
+		value <- 'setlinewidth'
+	)
+}
+
+helper context svg!StrokeWidth def: settingsAsObjects(): Sequence(postScript!Object) =
+	Sequence{thisModule.resolveTemp(self, 'width'), thisModule.resolveTemp(self, 'setlinewidth')};
+	
+helper context svg!StrokeWidth def: actionsAsObjects(): Sequence(postScript!object) = Sequence{};
+
+rule Fill {
+	from sw: svg!Fill
+	to fillName : postScript!LiteralName(
+		value <- 'doFill'
+	),
+	fillValue : postScript!"Boolean"(
+		value <- not sw.fill.oclIsKindOf(svg!NonePaint)
+	),
+	fillDef : postScript!Name(
+		value <- 'def'
+	),
+	setColor : postScript!Name(
+		value <- 'setrgbcolor'
+	)
+}
+
+helper context svg!Fill def: settingsAsObjects(): Sequence(postScript!Object) = 
+	Sequence{
+		thisModule.resolveTemp(self, 'fillName'), 
+		thisModule.resolveTemp(self, 'fillValue'), 
+		thisModule.resolveTemp(self, 'fillDef')
+	}->union(self.fill.asRGB())->union(Sequence{
+		thisModule.resolveTemp(self, 'setColor')
+	});
+
+rule Stroke {
+	from sw: svg!Stroke
+	to strokeName : postScript!LiteralName(
+		value <- 'doStroke'
+	),
+	strokeValue : postScript!"Boolean"(
+		value <- not sw.stroke.oclIsKindOf(svg!NonePaint)
+	),
+	strokeDef : postScript!Name(
+		value <- 'def'
+	),
+	setColor : postScript!Name(
+		value <- 'setrgbcolor'
+	)
+}
+
+helper context svg!Stroke def: settingsAsObjects(): Sequence(postScript!Object) = 
+	Sequence{
+		thisModule.resolveTemp(self, 'strokeName'),
+		thisModule.resolveTemp(self, 'strokeValue'),
+		thisModule.resolveTemp(self, 'strokeDef')
+	}->union(self.stroke.asRGB())->union(Sequence{
+		thisModule.resolveTemp(self, 'setColor')
+	});
+
+rule FontFamly {
+	from ff: svg!FontFamily
+	to font : postScript!"String" (
+		value <- ff.fontFamily
+	),
+	findFont : postScript!Name (
+		value <- 'findfont'
+	),
+	setFont : postScript!Name (
+		value <- 'setfont'
+	)
+}
+
+helper context svg!FontFamily def: settingsAsObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'font'),
+		thisModule.resolveTemp(self, 'findFont'),
+		thisModule.resolveTemp(self, 'setFont')
+	};
+
+rule FontSize {
+	from fs: svg!FontSize
+	to current : postScript!Name (
+		value <- 'currentfont'
+	), 
+	scale : postScript!"Real" (
+		value <- fs.fontSize.lengthAsPoints()
+	),
+	scaleFont : postScript!Name (
+		value <- 'scalefont'
+	),
+	setFont : postScript!Name (
+		value <- 'setfont'
+	)
+}
+
+helper context svg!FontSize def: settingsAsObjects(): Sequence(postScript!Object) =
+	Sequence{
+		thisModule.resolveTemp(self, 'current'),
+		thisModule.resolveTemp(self, 'scale'),
+		thisModule.resolveTemp(self, 'scaleFont'),
+		thisModule.resolveTemp(self, 'setFont')
+	};
+	
+helper context svg!ClipPathAttribute def: settingsAsObjects(): Sequence(postScript!Object) = Sequence{};
+
+helper context svg!Transform def: settingsAsObjects(): Sequence(postScript!Object) =
+	self.transform->collect(x | x.asObjects());
+
+abstract rule TransformValue {
+	from t: svg!TransformValue
+	to concat : postScript!Name (
+		value <- 'concat'
+	)
+}
+
+helper context svg!TransformValue def: asObjects(): Sequence(postScript!Object) =
+	Sequence{thisModule.resolveTemp(self, 'matrix'), thisModule.resolveTemp(self, 'concat')};
+
+rule MatrixTransform extends TransformValue {
+	from t: svg!Matrix
+	to a : postScript!"Real" (
+		value <- t.a
+	),
+	b : postScript!"Real" (
+		value <- t.b
+	),
+	c : postScript!"Real" (
+		value <- t.c
+	),
+	d : postScript!"Real" (
+		value <- t.d
+	),
+	e : postScript!"Real" (
+		value <- t.e
+	),
+	f : postScript!"Real" (
+		value <- t.f
+	),
+	matrix : postScript!Array (
+		objects <- Sequence{a, b, c, d, e, f}
+	)
+}
+	
+rule TranslateTransform extends TransformValue {
+	from t: svg!Translate
+	to a : postScript!"Real" (
+		value <- 1
+	),
+	b : postScript!"Real" (
+		value <- 0
+	),
+	c : postScript!"Real" (
+		value <- 0
+	),
+	d : postScript!"Real" (
+		value <- 1
+	),
+	e : postScript!"Real" (
+		value <- t.x.floatValue()
+	),
+	f : postScript!"Real" (
+		value <- (if t.y.oclIsUndefined() then 0.0 else t.y.floatValue() endif)
+	),
+	matrix : postScript!Array (
+		objects <- Sequence{a, b, c, d, e, f}
+	)
+}
+
+rule ScaleTransform extends TransformValue {
+	from t: svg!Scale
+	to a : postScript!"Real" (
+		value <- t.x.floatValue()
+	),
+	b : postScript!"Real" (
+		value <- 0
+	),
+	c : postScript!"Real" (
+		value <- 0
+	),
+	d : postScript!"Real" (
+		value <- (if t.y.oclIsUndefined() then 1.0 else t.y.floatValue() endif)
+	),
+	e : postScript!"Real" (
+		value <- 0.0
+	),
+	f : postScript!"Real" (
+		value <- 0.0
+	),
+	matrix : postScript!Array (
+		objects <- Sequence{a, b, c, d, e, f}
+	)
+}
+
+rule RotateTransform extends TransformValue {
+	from t: svg!Rotate
+	to a : postScript!"Real" (
+		value <- t.a.floatValue().cos()
+	),
+	b : postScript!"Real" (
+		value <- t.a.floatValue().sin()
+	),
+	c : postScript!"Real" (
+		value <- 0.0-t.a.floatValue().sin()
+	),
+	d : postScript!"Real" (
+		value <- t.a.floatValue().cos()
+	),
+	e : postScript!"Real" (
+		value <- (
+			(if t.x.oclIsUndefined() then 0.0 else t.x.floatValue() endif) -
+			(if t.x.oclIsUndefined() then 0.0 else t.x.floatValue() endif) * t.a.floatValue().cos() +
+			(if t.y.oclIsUndefined() then 0.0 else t.y.floatValue() endif) * t.a.floatValue().sin()
+		)
+	),
+	f : postScript!"Real" (
+		value <- (
+			(if t.y.oclIsUndefined() then 0.0 else t.y.floatValue() endif) -
+			(if t.x.oclIsUndefined() then 0.0 else t.x.floatValue() endif) * t.a.floatValue().sin() -
+			(if t.y.oclIsUndefined() then 0.0 else t.y.floatValue() endif) * t.a.floatValue().cos()
+		)
+	),
+	matrix : postScript!Array (
+		objects <- Sequence{a, b, c, d, e, f}
+	)
+}
+
+rule SkewXTransform extends TransformValue {
+	from t: svg!SkewX
+	to a : postScript!"Real" (
+		value <- 1.0
+	),
+	b : postScript!"Real" (
+		value <- 0.0
+	),
+	c : postScript!"Real" (
+		value <- t.a.floatValue().tan()
+	),
+	d : postScript!"Real" (
+		value <- 1
+	),
+	e : postScript!"Real" (
+		value <- 0.0
+	),
+	f : postScript!"Real" (
+		value <- 0.0
+	),
+	matrix : postScript!Array (
+		objects <- Sequence{a, b, c, d, e, f}
+	)
+}
+
+rule SkewYTransform extends TransformValue {
+	from t: svg!SkewY
+	to a : postScript!"Real" (
+		value <- 1.0
+	),
+	b : postScript!"Real" (
+		value <- t.a.floatValue().tan()
+	),
+	c : postScript!"Real" (
+		value <- 0.0
+	),
+	d : postScript!"Real" (
+		value <- 1
+	),
+	e : postScript!"Real" (
+		value <- 0.0
+	),
+	f : postScript!"Real" (
+		value <- 0.0
+	),
+	matrix : postScript!Array (
+		objects <- Sequence{a, b, c, d, e, f}
+	)
+}

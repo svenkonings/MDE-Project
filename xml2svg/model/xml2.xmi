@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ASCII"?>
+<modisco.xml:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modisco.xml="http://www.eclipse.org/MoDisco/Xml/0.1.incubation/XML" name="svg">
+  <children xsi:type="modisco.xml:Attribute" name="height" value="400"/>
+  <children xsi:type="modisco.xml:Attribute" name="width" value="450"/>
+  <children xsi:type="modisco.xml:Element" name="path">
+    <children xsi:type="modisco.xml:Attribute" name="id" value="lineAB"/>
+    <children xsi:type="modisco.xml:Attribute" name="d" value="M 100 350 l 150 -300"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke" value="red"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke-width" value="3"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill" value="none"/>
+  </children>
+  <children xsi:type="modisco.xml:Element" name="path">
+    <children xsi:type="modisco.xml:Attribute" name="id" value="lineBC"/>
+    <children xsi:type="modisco.xml:Attribute" name="d" value="M 250 50 l 150 300"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke" value="red"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke-width" value="3"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill" value="none"/>
+  </children>
+  <children xsi:type="modisco.xml:Element" name="path">
+    <children xsi:type="modisco.xml:Attribute" name="d" value="M 175 200 l 150 0"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke" value="green"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke-width" value="3"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill" value="none"/>
+  </children>
+  <children xsi:type="modisco.xml:Element" name="path">
+    <children xsi:type="modisco.xml:Attribute" name="d" value="M 100 350 q 150 -300 300 0"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke" value="blue"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke-width" value="5"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill" value="none"/>
+  </children>
+  <children xsi:type="modisco.xml:Comment" name=" Mark relevant points "/>
+  <children xsi:type="modisco.xml:Element" name="g">
+    <children xsi:type="modisco.xml:Attribute" name="stroke" value="black"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke-width" value="3"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill" value="black"/>
+    <children xsi:type="modisco.xml:Element" name="circle">
+      <children xsi:type="modisco.xml:Attribute" name="id" value="pointA"/>
+      <children xsi:type="modisco.xml:Attribute" name="cx" value="100"/>
+      <children xsi:type="modisco.xml:Attribute" name="cy" value="350"/>
+      <children xsi:type="modisco.xml:Attribute" name="r" value="3"/>
+    </children>
+    <children xsi:type="modisco.xml:Element" name="circle">
+      <children xsi:type="modisco.xml:Attribute" name="id" value="pointB"/>
+      <children xsi:type="modisco.xml:Attribute" name="cx" value="250"/>
+      <children xsi:type="modisco.xml:Attribute" name="cy" value="50"/>
+      <children xsi:type="modisco.xml:Attribute" name="r" value="3"/>
+    </children>
+    <children xsi:type="modisco.xml:Element" name="circle">
+      <children xsi:type="modisco.xml:Attribute" name="id" value="pointC"/>
+      <children xsi:type="modisco.xml:Attribute" name="cx" value="400"/>
+      <children xsi:type="modisco.xml:Attribute" name="cy" value="350"/>
+      <children xsi:type="modisco.xml:Attribute" name="r" value="3"/>
+    </children>
+  </children>
+  <children xsi:type="modisco.xml:Comment" name=" Label the points "/>
+  <children xsi:type="modisco.xml:Element" name="g">
+    <children xsi:type="modisco.xml:Attribute" name="font-size" value="30"/>
+    <children xsi:type="modisco.xml:Attribute" name="font-family" value="sans-serif"/>
+    <children xsi:type="modisco.xml:Attribute" name="fill" value="black"/>
+    <children xsi:type="modisco.xml:Attribute" name="stroke" value="none"/>
+    <children xsi:type="modisco.xml:Attribute" name="text-anchor" value="middle"/>
+    <children xsi:type="modisco.xml:Element" name="text">
+      <children xsi:type="modisco.xml:Attribute" name="x" value="100"/>
+      <children xsi:type="modisco.xml:Attribute" name="y" value="350"/>
+      <children xsi:type="modisco.xml:Attribute" name="dx" value="-30"/>
+      <children xsi:type="modisco.xml:Text" name="A"/>
+    </children>
+    <children xsi:type="modisco.xml:Element" name="text">
+      <children xsi:type="modisco.xml:Attribute" name="x" value="250"/>
+      <children xsi:type="modisco.xml:Attribute" name="y" value="50"/>
+      <children xsi:type="modisco.xml:Attribute" name="dy" value="-10"/>
+      <children xsi:type="modisco.xml:Text" name="B"/>
+    </children>
+    <children xsi:type="modisco.xml:Element" name="text">
+      <children xsi:type="modisco.xml:Attribute" name="x" value="400"/>
+      <children xsi:type="modisco.xml:Attribute" name="y" value="350"/>
+      <children xsi:type="modisco.xml:Attribute" name="dx" value="30"/>
+      <children xsi:type="modisco.xml:Text" name="C"/>
+    </children>
+  </children>
+</modisco.xml:Root>

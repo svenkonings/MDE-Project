@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.xtext.svg.coordinate
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.xtext.svg.coordinate; singleton:=true
+Require-Bundle: svg,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.xtext.svg.coordinate,
+ org.xtext.svg.coordinate.formatting2;uses:="org.eclipse.xtext.formatting2",
+ org.xtext.svg.coordinate.generator;uses:="org.eclipse.xtext.generator,org.eclipse.emf.ecore.resource",
+ org.xtext.svg.coordinate.parser.antlr;uses:="org.xtext.svg.coordinate.services,org.eclipse.xtext.parser.antlr,org.xtext.svg.coordinate.parser.antlr.internal",
+ org.xtext.svg.coordinate.parser.antlr.internal;x-internal:=true,
+ org.xtext.svg.coordinate.scoping,
+ org.xtext.svg.coordinate.serializer; uses:="org.eclipse.emf.ecore,  org.eclipse.xtext.nodemodel,  org.xtext.svg.coordinate.services,  org.eclipse.xtext.serializer.analysis,  svg,  org.eclipse.xtext.serializer.sequencer,  org.eclipse.xtext,  org.eclipse.xtext.serializer",
+ org.xtext.svg.coordinate.services;uses:="org.eclipse.xtext.common.services,org.eclipse.xtext.service,org.eclipse.xtext",
+ org.xtext.svg.coordinate.validation
+Import-Package: svg,
+ org.apache.log4j

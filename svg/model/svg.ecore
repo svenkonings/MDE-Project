@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="svg" nsURI="http://www.example.org/svg" nsPrefix="svg">
+  <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" ordered="false"
+        upperBound="-1" eType="#//Attribute" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StructuralElement" abstract="true" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Use" eSuperTypes="#//StructuralElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="x" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="y" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="width" eType="#//Length"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="height" eType="#//Length"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="href" eType="#//Href" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClipPath" eSuperTypes="#//StructuralElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graphicElements" upperBound="-1"
+        eType="#//GraphicElement" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="use" ordered="false" upperBound="-1"
+        eType="#//Use" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ContainerElement" abstract="true" eSuperTypes="#//StructuralElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//Element" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Group" eSuperTypes="#//ContainerElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Svg" eSuperTypes="#//Group">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="x" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="y" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="width" eType="#//Length"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="height" eType="#//Length"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preserveAspectRatio" eType="#//PreserveAspectRatio"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="viewBox" eType="#//ViewBox"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Defs" eSuperTypes="#//ContainerElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Symbol" eSuperTypes="#//Defs">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preserveAspectRatio" eType="#//PreserveAspectRatio"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="viewBox" eType="#//ViewBox"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphicElement" abstract="true" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Circle" eSuperTypes="#//GraphicElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cx" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cy" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="r" eType="#//Length" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Ellipse" eSuperTypes="#//GraphicElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cx" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cy" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rx" eType="#//Length" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ry" eType="#//Length" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Image" eSuperTypes="#//GraphicElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="x" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="y" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="width" eType="#//Length"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="height" eType="#//Length"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="href" eType="#//Href" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preserveAspectRatio" eType="#//PreserveAspectRatio"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Line" eSuperTypes="#//GraphicElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="x1" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="y1" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="x2" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="y2" eType="#//Coordinate"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Path" eSuperTypes="#//GraphicElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="path" upperBound="-1" eType="#//PathValue"
+        containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pathLength" eType="#//Length"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Polygon" eSuperTypes="#//GraphicElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="points" upperBound="-1"
+        eType="#//Point" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Polyline" eSuperTypes="#//GraphicElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="points" upperBound="-1"
+        eType="#//Point" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Rect" eSuperTypes="#//GraphicElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="x" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="y" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="width" eType="#//Length"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="height" eType="#//Length"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rx" eType="#//Length" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ry" eType="#//Length" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Text" eSuperTypes="#//GraphicElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="x" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="y" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dx" eType="#//Length" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dy" eType="#//Length" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="textLength" eType="#//Length"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Attribute" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Fill" eSuperTypes="#//Attribute">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fill" lowerBound="1" eType="#//Paint"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Stroke" eSuperTypes="#//Attribute">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stroke" lowerBound="1"
+        eType="#//Paint" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StrokeWidth" eSuperTypes="#//Attribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="strokeWidth" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StrokeDashArray" eSuperTypes="#//Attribute">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="strokeDashArray" upperBound="-1"
+        eType="#//Length" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StrokeDashOffset" eSuperTypes="#//Attribute">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="strokeDashOffset" lowerBound="1"
+        eType="#//Length" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClipPathAttribute" eSuperTypes="#//Attribute">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clipPath" lowerBound="1"
+        eType="#//LocalIri" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FontFamily" eSuperTypes="#//Attribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fontFamily" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FontSize" eSuperTypes="#//Attribute">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fontSize" lowerBound="1"
+        eType="#//Length" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transform" eSuperTypes="#//Attribute">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transform" upperBound="-1"
+        eType="#//TransformValue" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeType" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Length" eSuperTypes="#//AttributeType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="number" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" eType="#//Unit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Coordinate" eSuperTypes="#//AttributeType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="number" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" eType="#//Unit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PreserveAspectRatio" eSuperTypes="#//AttributeType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="align" lowerBound="1" eType="#//Align"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="meetOrSlice" eType="#//MeetOrSlice"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ViewBox" eSuperTypes="#//AttributeType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="minX" lowerBound="1" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="minY" lowerBound="1" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="width" lowerBound="1" eType="#//Length"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="height" lowerBound="1"
+        eType="#//Length" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Point" eSuperTypes="#//AttributeType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="x" lowerBound="1" eType="#//Coordinate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="y" lowerBound="1" eType="#//Coordinate"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Href" abstract="true" eSuperTypes="#//AttributeType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalIri" eSuperTypes="#//Href">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="elementName" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Base64Ref" eSuperTypes="#//Href">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="base64" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Paint" abstract="true" eSuperTypes="#//AttributeType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IriPaint" eSuperTypes="#//Paint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="iri" lowerBound="1" eType="#//LocalIri"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NonePaint" eSuperTypes="#//Paint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Color" abstract="true" eSuperTypes="#//Paint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="HexColor" eSuperTypes="#//Color">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hex" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RgbColor" eSuperTypes="#//Color">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="red" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="green" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="blue" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RgbPercentage" eSuperTypes="#//Color">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="red" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="green" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="blue" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeywordColor" eSuperTypes="#//Color">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyword" lowerBound="1"
+        eType="#//ColorKeyword"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PathValue" abstract="true" eSuperTypes="#//AttributeType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AbsoluteMoveTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeMoveTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbsoluteLineTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeLineTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbsoluteHorizontalLineTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeHorizontalLineTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbsoluteVerticalLineTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeVerticalLineTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbsoluteQuadraticCurveTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cx" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeQuadraticCurveTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dcx" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dcy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbsoluteCubicCurveTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="c1x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="c1y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="c2x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="c2y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeCubicCurveTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dc1x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dc1y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dc2x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dc2y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbsoluteSmoothQuadraticCurveTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeSmoothQuadraticCurveTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbsoluteSmoothCubicCurveTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cx" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeSmoothCubicCurveTo" eSuperTypes="#//PathValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dcx" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dcy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClosePath" eSuperTypes="#//PathValue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TransformValue" abstract="true" eSuperTypes="#//AttributeType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Matrix" eSuperTypes="#//TransformValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="a" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="b" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="c" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="d" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="e" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="f" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Translate" eSuperTypes="#//TransformValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Scale" eSuperTypes="#//TransformValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Rotate" eSuperTypes="#//TransformValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="a" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SkewX" eSuperTypes="#//TransformValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="a" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SkewY" eSuperTypes="#//TransformValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="a" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Unit">
+    <eLiterals name="px"/>
+    <eLiterals name="em"/>
+    <eLiterals name="ex"/>
+    <eLiterals name="in"/>
+    <eLiterals name="cm"/>
+    <eLiterals name="mm"/>
+    <eLiterals name="pt"/>
+    <eLiterals name="pc"/>
+    <eLiterals name="percentage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Align">
+    <eLiterals name="none"/>
+    <eLiterals name="xMinYMin"/>
+    <eLiterals name="xMidYMin"/>
+    <eLiterals name="xMaxYMin"/>
+    <eLiterals name="xMinYMid"/>
+    <eLiterals name="xMidYMid"/>
+    <eLiterals name="xMaxYMid"/>
+    <eLiterals name="xMinYMax"/>
+    <eLiterals name="xMidYMax"/>
+    <eLiterals name="xMaxYMax"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MeetOrSlice">
+    <eLiterals name="meet"/>
+    <eLiterals name="slice"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ColorKeyword">
+    <eLiterals name="aliceblue"/>
+    <eLiterals name="antiquewhite"/>
+    <eLiterals name="aqua"/>
+    <eLiterals name="aquamarine"/>
+    <eLiterals name="azure"/>
+    <eLiterals name="beige"/>
+    <eLiterals name="bisque"/>
+    <eLiterals name="black"/>
+    <eLiterals name="blanchedalmond"/>
+    <eLiterals name="blue"/>
+    <eLiterals name="blueviolet"/>
+    <eLiterals name="brown"/>
+    <eLiterals name="burlywood"/>
+    <eLiterals name="cadetblue"/>
+    <eLiterals name="chartreuse"/>
+    <eLiterals name="chocolate"/>
+    <eLiterals name="coral"/>
+    <eLiterals name="cornflowerblue"/>
+    <eLiterals name="cornsilk"/>
+    <eLiterals name="crimson"/>
+    <eLiterals name="cyan"/>
+    <eLiterals name="darkblue"/>
+    <eLiterals name="darkcyan"/>
+    <eLiterals name="darkgoldenrod"/>
+    <eLiterals name="darkgray"/>
+    <eLiterals name="darkgreen"/>
+    <eLiterals name="darkgrey"/>
+    <eLiterals name="darkkhaki"/>
+    <eLiterals name="darkmagenta"/>
+    <eLiterals name="darkolivegreen"/>
+    <eLiterals name="darkorange"/>
+    <eLiterals name="darkorchid"/>
+    <eLiterals name="darkred"/>
+    <eLiterals name="darksalmon"/>
+    <eLiterals name="darkseagreen"/>
+    <eLiterals name="darkslateblue"/>
+    <eLiterals name="darkslategray"/>
+    <eLiterals name="darkslategrey"/>
+    <eLiterals name="darkturquoise"/>
+    <eLiterals name="darkviolet"/>
+    <eLiterals name="deeppink"/>
+    <eLiterals name="deepskyblue"/>
+    <eLiterals name="dimgray"/>
+    <eLiterals name="dimgrey"/>
+    <eLiterals name="dodgerblue"/>
+    <eLiterals name="firebrick"/>
+    <eLiterals name="floralwhite"/>
+    <eLiterals name="forestgreen"/>
+    <eLiterals name="fuchsia"/>
+    <eLiterals name="gainsboro"/>
+    <eLiterals name="ghostwhite"/>
+    <eLiterals name="gold"/>
+    <eLiterals name="goldenrod"/>
+    <eLiterals name="gray"/>
+    <eLiterals name="grey"/>
+    <eLiterals name="green"/>
+    <eLiterals name="greenyellow"/>
+    <eLiterals name="honeydew"/>
+    <eLiterals name="hotpink"/>
+    <eLiterals name="indianred"/>
+    <eLiterals name="indigo"/>
+    <eLiterals name="ivory"/>
+    <eLiterals name="khaki"/>
+    <eLiterals name="lavender"/>
+    <eLiterals name="lavenderblush"/>
+    <eLiterals name="lawngreen"/>
+    <eLiterals name="lemonchiffon"/>
+    <eLiterals name="lightblue"/>
+    <eLiterals name="lightcoral"/>
+    <eLiterals name="lightcyan"/>
+    <eLiterals name="lightgoldenrodyellow"/>
+    <eLiterals name="lightgray"/>
+    <eLiterals name="lightgreen"/>
+    <eLiterals name="lightgrey"/>
+    <eLiterals name="lightpink"/>
+    <eLiterals name="lightsalmon"/>
+    <eLiterals name="lightseagreen"/>
+    <eLiterals name="lightskyblue"/>
+    <eLiterals name="lightslategray"/>
+    <eLiterals name="lightslategrey"/>
+    <eLiterals name="lightsteelblue"/>
+    <eLiterals name="lightyellow"/>
+    <eLiterals name="lime"/>
+    <eLiterals name="limegreen"/>
+    <eLiterals name="linen"/>
+    <eLiterals name="magenta"/>
+    <eLiterals name="maroon"/>
+    <eLiterals name="mediumaquamarine"/>
+    <eLiterals name="mediumblue"/>
+    <eLiterals name="mediumorchid"/>
+    <eLiterals name="mediumpurple"/>
+    <eLiterals name="mediumseagreen"/>
+    <eLiterals name="mediumslateblue"/>
+    <eLiterals name="mediumspringgreen"/>
+    <eLiterals name="mediumturquoise"/>
+    <eLiterals name="mediumvioletred"/>
+    <eLiterals name="midnightblue"/>
+    <eLiterals name="mintcream"/>
+    <eLiterals name="mistyrose"/>
+    <eLiterals name="moccasin"/>
+    <eLiterals name="navajowhite"/>
+    <eLiterals name="navy"/>
+    <eLiterals name="oldlace"/>
+    <eLiterals name="olive"/>
+    <eLiterals name="olivedrab"/>
+    <eLiterals name="orange"/>
+    <eLiterals name="orangered"/>
+    <eLiterals name="orchid"/>
+    <eLiterals name="palegoldenrod"/>
+    <eLiterals name="palegreen"/>
+    <eLiterals name="paleturquoise"/>
+    <eLiterals name="palevioletred"/>
+    <eLiterals name="papayawhip"/>
+    <eLiterals name="peachpuff"/>
+    <eLiterals name="peru"/>
+    <eLiterals name="pink"/>
+    <eLiterals name="plum"/>
+    <eLiterals name="powderblue"/>
+    <eLiterals name="purple"/>
+    <eLiterals name="red"/>
+    <eLiterals name="rosybrown"/>
+    <eLiterals name="royalblue"/>
+    <eLiterals name="saddlebrown"/>
+    <eLiterals name="salmon"/>
+    <eLiterals name="sandybrown"/>
+    <eLiterals name="seagreen"/>
+    <eLiterals name="seashell"/>
+    <eLiterals name="sienna"/>
+    <eLiterals name="silver"/>
+    <eLiterals name="skyblue"/>
+    <eLiterals name="slateblue"/>
+    <eLiterals name="slategray"/>
+    <eLiterals name="slategrey"/>
+    <eLiterals name="snow"/>
+    <eLiterals name="springgreen"/>
+    <eLiterals name="steelblue"/>
+    <eLiterals name="tan"/>
+    <eLiterals name="teal"/>
+    <eLiterals name="thistle"/>
+    <eLiterals name="tomato"/>
+    <eLiterals name="turquoise"/>
+    <eLiterals name="violet"/>
+    <eLiterals name="wheat"/>
+    <eLiterals name="white"/>
+    <eLiterals name="whitesmoke"/>
+    <eLiterals name="yellow"/>
+    <eLiterals name="yellowgreen"/>
+  </eClassifiers>
+</ecore:EPackage>

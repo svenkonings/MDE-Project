@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg:Svg xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:svg="http://www.example.org/svg"
+    xsi:schemaLocation="http://www.example.org/svg svg.ecore">
+  <elements
+      xsi:type="svg:Path"
+      name="lineAB">
+    <attributes
+        xsi:type="svg:Stroke">
+      <stroke
+          xsi:type="svg:KeywordColor"
+          keyword="red"/>
+    </attributes>
+    <attributes
+        xsi:type="svg:StrokeWidth"
+        strokeWidth="3"/>
+    <attributes
+        xsi:type="svg:Fill">
+      <fill
+          xsi:type="svg:NonePaint"/>
+    </attributes>
+    <path xsi:type="svg:AbsoluteMoveTo"
+        x="100"
+        y="350"/>
+    <path xsi:type="svg:RelativeLineTo"
+        dx="150"
+        dy="-300"/>
+  </elements>
+  <elements
+      xsi:type="svg:Path"
+      name="lineBC">
+    <attributes
+        xsi:type="svg:Stroke">
+      <stroke
+          xsi:type="svg:KeywordColor"
+          keyword="red"/>
+    </attributes>
+    <attributes
+        xsi:type="svg:StrokeWidth"
+        strokeWidth="3"/>
+    <attributes
+        xsi:type="svg:Fill">
+      <fill
+          xsi:type="svg:NonePaint"/>
+    </attributes>
+    <path xsi:type="svg:AbsoluteMoveTo"
+        x="250"
+        y="50"/>
+    <path xsi:type="svg:RelativeLineTo"
+        dx="150"
+        dy="300"/>
+  </elements>
+  <elements
+      xsi:type="svg:Path"
+      name="">
+    <attributes
+        xsi:type="svg:Stroke">
+      <stroke
+          xsi:type="svg:KeywordColor"
+          keyword="green"/>
+    </attributes>
+    <attributes
+        xsi:type="svg:StrokeWidth"
+        strokeWidth="3"/>
+    <attributes
+        xsi:type="svg:Fill">
+      <fill
+          xsi:type="svg:NonePaint"/>
+    </attributes>
+    <path xsi:type="svg:AbsoluteMoveTo"
+        x="175"
+        y="200"/>
+    <path xsi:type="svg:RelativeLineTo"
+        dx="150"
+        dy="0"/>
+  </elements>
+  <elements
+      xsi:type="svg:Path"
+      name="">
+    <attributes
+        xsi:type="svg:Stroke">
+      <stroke
+          xsi:type="svg:KeywordColor"
+          keyword="blue"/>
+    </attributes>
+    <attributes
+        xsi:type="svg:StrokeWidth"
+        strokeWidth="5"/>
+    <attributes
+        xsi:type="svg:Fill">
+      <fill
+          xsi:type="svg:NonePaint"/>
+    </attributes>
+    <path xsi:type="svg:AbsoluteMoveTo"
+        x="100"
+        y="350"/>
+    <path xsi:type="svg:RelativeQuadraticCurveTo"
+        dcx="150"
+        dcy="-300"
+        dx="300"
+        dy="0"/>
+  </elements>
+  <elements
+      xsi:type="svg:Group">
+    <attributes
+        xsi:type="svg:Stroke">
+      <stroke
+          xsi:type="svg:KeywordColor"
+          keyword="black"/>
+    </attributes>
+    <attributes
+        xsi:type="svg:StrokeWidth"
+        strokeWidth="3"/>
+    <attributes
+        xsi:type="svg:Fill">
+      <fill
+          xsi:type="svg:KeywordColor"
+          keyword="black"/>
+    </attributes>
+    <elements
+        xsi:type="svg:Circle"
+        name="pointA">
+      <cx number="100"/>
+      <cy number="350"/>
+      <r number="3"/>
+    </elements>
+    <elements
+        xsi:type="svg:Circle"
+        name="pointB">
+      <cx number="250"/>
+      <cy number="50"/>
+      <r number="3"/>
+    </elements>
+    <elements
+        xsi:type="svg:Circle"
+        name="pointC">
+      <cx number="400"/>
+      <cy number="350"/>
+      <r number="3"/>
+    </elements>
+  </elements>
+  <elements
+      xsi:type="svg:Group">
+    <attributes
+        xsi:type="svg:FontSize">
+      <fontSize
+          number="30"/>
+    </attributes>
+    <attributes
+        xsi:type="svg:FontFamily"
+        fontFamily="sans-serif"/>
+    <attributes
+        xsi:type="svg:Fill">
+      <fill
+          xsi:type="svg:KeywordColor"
+          keyword="black"/>
+    </attributes>
+    <attributes
+        xsi:type="svg:Stroke">
+      <stroke
+          xsi:type="svg:NonePaint"/>
+    </attributes>
+    <elements
+        xsi:type="svg:Text"
+        text="A">
+      <x number="100"/>
+      <y number="350"/>
+      <dx number="-30"/>
+    </elements>
+    <elements
+        xsi:type="svg:Text"
+        name=""
+        text="B">
+      <x number="250"/>
+      <y number="50"/>
+      <dy number="-10"/>
+    </elements>
+    <elements
+        xsi:type="svg:Text"
+        text="C">
+      <x number="400"/>
+      <y number="350"/>
+      <dx number="30"/>
+    </elements>
+  </elements>
+  <width number="450"/>
+  <height number="400"/>
+</svg:Svg>

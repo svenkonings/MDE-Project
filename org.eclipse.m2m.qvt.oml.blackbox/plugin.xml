@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<extension point="org.eclipse.m2m.qvt.oml.javaBlackboxUnits">
+   		<unit name="ParserLib" namespace="m2m.qvt.oml">
+    		<library name="ParseLib" class="org.eclipse.m2m.qvt.oml.blackbox.ParserLibrary">
+    			<metamodel nsURI="http://www.example.org/svg"/>
+    		</library>
+		</unit>
+	</extension>
+</plugin>

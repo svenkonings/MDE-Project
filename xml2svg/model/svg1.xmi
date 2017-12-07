@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg:Svg xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:svg="http://www.example.org/svg">
+  <elements xsi:type="svg:Polygon">
+    <attributes xsi:type="svg:Fill">
+      <fill xsi:type="svg:KeywordColor" keyword="lime"/>
+    </attributes>
+    <attributes xsi:type="svg:Stroke">
+      <stroke xsi:type="svg:KeywordColor" keyword="purple"/>
+    </attributes>
+    <attributes xsi:type="svg:StrokeWidth" strokeWidth="1.0"/>
+    <points>
+      <x number="220"/>
+      <y number="10"/>
+    </points>
+    <points>
+      <x number="300"/>
+      <y number="210"/>
+    </points>
+    <points>
+      <x number="170"/>
+      <y number="250"/>
+    </points>
+    <points>
+      <x number="123"/>
+      <y number="234"/>
+    </points>
+  </elements>
+  <width number="500"/>
+  <height number="250"/>
+</svg:Svg>

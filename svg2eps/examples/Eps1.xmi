@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<postScript:Program lowerLeftX="5" lowerLeftY="5" 
+ upperRightX="105" upperRightY="105" 
+ title="Square" creator="Pieter Bos" creationDate="Sun Sep 24 13:21:51 2017">
+  <object xsi:type="postScript:Integer" value="10"/>
+  <object xsi:type="postScript:Integer" value="10"/>
+  <object xsi:type="postScript:Name" value="moveto"/>
+  <object xsi:type="postScript:Integer"/>
+  <object xsi:type="postScript:Integer" value="90"/>
+  <object xsi:type="postScript:Name" value="rlineto"/>
+  <object xsi:type="postScript:Integer" value="90"/>
+  <object xsi:type="postScript:Integer"/>
+  <object xsi:type="postScript:Name" value="rlineto"/>
+  <object xsi:type="postScript:Integer"/>
+  <object xsi:type="postScript:Integer" value="-90"/>
+  <object xsi:type="postScript:Name" value="rlineto"/>
+  <object xsi:type="postScript:Name" value="closepath"/>
+  <object xsi:type="postScript:Name" value="fill"/>
+</postScript:Program>

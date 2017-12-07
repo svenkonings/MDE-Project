@@ -1,0 +1,60 @@
+«IMPORT postScript»
+
+«DEFINE main FOR Program»
+    «FILE "/out/path/out.eps"»%!PS-Adobe-2.0 EPSF-2.0
+%%Title: «title»
+%%Creator: «creator»
+%%CreationDate: «creationDate»
+%%BoundingBox: «lowerLeftX» «lowerLeftY» «upperRightX» «upperRightY»
+        «EXPAND item FOREACH object»
+    «ENDFILE»
+«ENDDEFINE»
+
+«DEFINE item FOR Object»
+«ENDDEFINE»
+
+«DEFINE item FOR Name»
+«value»
+«ENDDEFINE»
+
+«DEFINE item FOR Array»
+[
+«EXPAND item FOREACH objects»
+]
+«ENDDEFINE»
+
+«DEFINE item FOR LiteralName»
+/«value»
+«ENDDEFINE»
+
+«DEFINE item FOR Procedure»
+{
+«EXPAND item FOREACH objects»
+}
+«ENDDEFINE»
+
+«DEFINE item FOR DictionaryEntry»
+«EXPAND item FOR key» «EXPAND item FOR value»
+«ENDDEFINE»
+
+«DEFINE item FOR Dictionary»
+<<
+«EXPAND item FOREACH entries»
+>>
+«ENDDEFINE»
+
+«DEFINE item FOR postScript::Integer»
+«value»
+«ENDDEFINE»
+
+«DEFINE item FOR postScript::Real»
+«value»
+«ENDDEFINE»
+
+«DEFINE item FOR postScript::Boolean»
+«value»
+«ENDDEFINE»
+
+«DEFINE item FOR postScript::String»
+(«value»)
+«ENDDEFINE»

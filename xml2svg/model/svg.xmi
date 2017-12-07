@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg:Svg xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:svg="http://www.example.org/svg">
+  <elements xsi:type="svg:Defs">
+    <elements xsi:type="svg:Group" name="testId">
+      <elements xsi:type="svg:Circle">
+        <cx number="0"/>
+        <cy number="0"/>
+        <r number="10"/>
+      </elements>
+    </elements>
+  </elements>
+  <elements xsi:type="svg:Rect">
+    <attributes xsi:type="svg:Fill">
+      <fill xsi:type="svg:HexColor" hex="#008d46"/>
+    </attributes>
+    <x number="0"/>
+    <width number="1"/>
+    <height number="2"/>
+  </elements>
+  <elements xsi:type="svg:Rect">
+    <attributes xsi:type="svg:Fill">
+      <fill xsi:type="svg:HexColor" hex="#ffffff"/>
+    </attributes>
+    <x number="1"/>
+    <width number="1"/>
+    <height number="2"/>
+  </elements>
+  <elements xsi:type="svg:Rect">
+    <attributes xsi:type="svg:Fill">
+      <fill xsi:type="svg:HexColor" hex="#d2232c"/>
+    </attributes>
+    <x number="2"/>
+    <width number="1"/>
+    <height number="2"/>
+  </elements>
+  <elements xsi:type="svg:Text" text="This is a test."/>
+  <elements xsi:type="svg:Use">
+    <x number="10"/>
+    <y number="10"/>
+    <href xsi:type="svg:LocalIri" elementName="testId"/>
+  </elements>
+  <width number="150"/>
+  <height number="100"/>
+  <viewBox>
+    <minX number="0"/>
+    <minY number="0"/>
+    <width number="3"/>
+    <height number="2"/>
+  </viewBox>
+</svg:Svg>

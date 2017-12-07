@@ -1,0 +1,273 @@
+import m2m.qvt.oml.ParserLib;
+
+modeltype XML uses xml('http://www.eclipse.org/MoDisco/Xml/0.1.incubation/XML');
+modeltype SVG uses svg('http://www.example.org/svg');
+
+transformation xml2svg(in xml : XML, out SVG);
+
+main() {
+	xml.rootObjects()[XML::Element]->map convertElements()->asOrderedSet();
+}
+
+/*
+	--- Queries ---
+*/
+query XML::Element::getChild(name : String) : XML::Element {
+	return self.children[XML::Element]->select(e | e.name = name)->first();
+}
+
+query XML::Element::getAttribute(name : String) : String {
+	return self.children[XML::Attribute]->select(a | a.name = name)->first().value;
+}
+
+query XML::Element::getText() : String {
+	return self.children[XML::Text]->first().name;
+}
+
+query XML::Element::getHref() : String {
+	return self.children[XML::Attribute]->select(a | a.name = "href" or a.name = "xlink:href")->first().value;
+}
+
+/*
+	--- Converters ---
+*/
+mapping XML::Element::convertElements() : SVG::Element
+disjuncts
+	XML::Element::convertStructuralElements,
+	XML::Element::convertGraphicElements;
+	
+mapping XML::Element::convertStructuralElements() : SVG::StructuralElement
+disjuncts
+	XML::Element::element2use,
+	XML::Element::element2clipPath,
+	XML::Element::convertContainerElements;
+
+mapping XML::Element::convertContainerElements() : SVG::ContainerElement
+disjuncts
+	XML::Element::element2group,
+	XML::Element::element2svg,
+	XML::Element::element2defs,
+	XML::Element::element2symbol;
+
+mapping XML::Element::convertGraphicElements() : SVG::GraphicElement
+disjuncts
+	XML::Element::element2circle,
+	XML::Element::element2ellipse,
+	XML::Element::element2image,
+	XML::Element::element2line,
+	XML::Element::element2path,
+	XML::Element::element2polygon,
+	XML::Element::element2polyline,
+	XML::Element::element2rect,
+	XML::Element::element2text;
+
+mapping XML::Attribute::convertAttributes() : SVG::Attribute 
+disjuncts
+	XML::Attribute::attribute2fill,
+	XML::Attribute::attribute2stroke,
+	XML::Attribute::attribute2strokeWidth,
+	XML::Attribute::attribute2strokeDashArray,
+	XML::Attribute::attribute2strokeDashOffset,
+	XML::Attribute::attribute2clipPathAttribute,
+	XML::Attribute::attribute2fontFamily,
+	XML::Attribute::attribute2fontSize,
+	XML::Attribute::attribute2transform;
+
+/*
+	--- Elements ---
+*/
+abstract mapping XML::Element::element2element() : SVG::Element {
+	name := self.getAttribute('id');
+	attributes += self.children[XML::Attribute]->map convertAttributes();
+}
+
+abstract mapping XML::Element::element2structuralElement() : SVG::StructuralElement
+inherits XML::Element::element2element;
+
+mapping XML::Element::element2use() : SVG::Use
+inherits XML::Element::element2structuralElement
+when {self.name = 'use'} {
+	x := getCoordinate(self.getAttribute("x"));
+	y := getCoordinate(self.getAttribute("y"));
+	width := getLength(self.getAttribute("width"));
+	height := getLength(self.getAttribute("height"));
+	href := getHref(self.getHref());
+}
+
+mapping XML::Element::element2clipPath() : SVG::ClipPath
+inherits XML::Element::element2structuralElement
+when {self.name = 'clipPath'} {
+	graphicElements += self.children[XML::Element]->map convertGraphicElements();
+	use := self.children[XML::Element]->map element2use();
+}
+
+abstract mapping XML::Element::element2containerElement() : SVG::ContainerElement
+inherits XML::Element::element2structuralElement {
+	elements += self.children[XML::Element]->map convertElements();
+}
+
+mapping XML::Element::element2group() : SVG::Group
+inherits XML::Element::element2containerElement
+when {self.name = 'g'};
+
+mapping XML::Element::element2svg() : SVG::Svg
+inherits XML::Element::element2containerElement
+when {self.name = 'svg'} {
+	x := getCoordinate(self.getAttribute("x"));
+	y := getCoordinate(self.getAttribute("y"));
+	width := getLength(self.getAttribute("width"));
+	height := getLength(self.getAttribute("height"));
+	preserveAspectRatio := getPreserveAspectRatio(self.getAttribute("preserveAspectRatio"));
+	viewBox := getViewBox(self.getAttribute("viewBox"));
+}
+
+mapping XML::Element::element2defs() : SVG::Defs
+inherits XML::Element::element2containerElement
+when {self.name = 'defs'};
+
+mapping XML::Element::element2symbol() : SVG::Symbol
+inherits XML::Element::element2containerElement
+when {self.name = 'symbol'} {
+	preserveAspectRatio := getPreserveAspectRatio(self.getAttribute("preserveAspectRatio"));
+	viewBox := getViewBox(self.getAttribute("viewBox"));
+}
+
+abstract mapping XML::Element::element2graphicElement() : SVG::GraphicElement
+inherits XML::Element::element2element;
+
+mapping XML::Element::element2circle() : SVG::Circle
+inherits XML::Element::element2graphicElement
+when {self.name = 'circle'} {
+	cx := getCoordinate(self.getAttribute("cx"));
+	cy := getCoordinate(self.getAttribute("cy"));
+	r := getLength(self.getAttribute("r"));
+}
+
+mapping XML::Element::element2ellipse() : SVG::Ellipse
+inherits XML::Element::element2graphicElement
+when {self.name = 'ellipse'} {
+	cx := getCoordinate(self.getAttribute("cx"));
+	cy := getCoordinate(self.getAttribute("cy"));
+	rx := getLength(self.getAttribute("rx"));
+	ry := getLength(self.getAttribute("ry"));
+}
+
+mapping XML::Element::element2image() : SVG::Image
+inherits XML::Element::element2graphicElement
+when {self.name = 'image'} {
+	x := getCoordinate(self.getAttribute("x"));
+	y := getCoordinate(self.getAttribute("y"));
+	width := getLength(self.getAttribute("width"));
+	height := getLength(self.getAttribute("height"));
+	href := getHref(self.getHref());
+	preserveAspectRatio := getPreserveAspectRatio(self.getAttribute("preserveAspectRatio"));
+}
+
+mapping XML::Element::element2line() : SVG::Line
+inherits XML::Element::element2graphicElement
+when {self.name = 'line'} {
+	x1 := getCoordinate(self.getAttribute("x1"));
+	y1 := getCoordinate(self.getAttribute("y1"));
+	x2 := getCoordinate(self.getAttribute("x2"));
+	y2 := getCoordinate(self.getAttribute("y2"));
+}
+
+mapping XML::Element::element2path() : SVG::Path
+inherits XML::Element::element2graphicElement
+when {self.name = 'path'} {
+	path := getPath(self.getAttribute("d"));
+	pathLength := getLength(self.getAttribute("pathLength"))
+}
+
+mapping XML::Element::element2polygon() : SVG::Polygon
+inherits XML::Element::element2graphicElement
+when {self.name = 'polygon'} {
+	points := getPoints(self.getAttribute("points"));
+}
+
+mapping XML::Element::element2polyline() : SVG::Polyline
+inherits XML::Element::element2graphicElement
+when {self.name = 'polyline'} {
+	points := getPoints(self.getAttribute("points"));
+}
+
+mapping XML::Element::element2rect() : SVG::Rect
+inherits XML::Element::element2graphicElement
+when {self.name = 'rect'} {
+	x := getCoordinate(self.getAttribute("x"));
+	y := getCoordinate(self.getAttribute("y"));
+	width := getLength(self.getAttribute("width"));
+	height := getLength(self.getAttribute("height"));
+	rx := getLength(self.getAttribute("rx"));
+	ry := getLength(self.getAttribute("ry"));
+}
+
+mapping XML::Element::element2text() : SVG::Text
+inherits XML::Element::element2graphicElement
+when {self.name = 'text'} {
+	x := getCoordinate(self.getAttribute("x"));
+	y := getCoordinate(self.getAttribute("y"));
+	dx := getLength(self.getAttribute("dx"));
+	dy := getLength(self.getAttribute("dy"));
+	textLength := getLength(self.getAttribute("textLength"));
+	text := self.getText();
+}
+
+/*
+	--- Attributes ---
+*/
+abstract mapping XML::Attribute::attribute2attribute() : SVG::Attribute;
+
+mapping XML::Attribute::attribute2fill() : SVG::Fill
+inherits XML::Attribute::attribute2attribute
+when {self.name = 'fill'} {
+	fill := getPaint(self.value);
+}
+
+mapping XML::Attribute::attribute2stroke() : SVG::Stroke
+inherits XML::Attribute::attribute2attribute
+when {self.name = 'stroke'} {
+	stroke := getPaint(self.value);
+}
+
+mapping XML::Attribute::attribute2strokeWidth() : SVG::StrokeWidth
+inherits XML::Attribute::attribute2attribute
+when {self.name = 'stroke-width'} {
+	strokeWidth := self.value.toReal()
+}
+
+mapping XML::Attribute::attribute2strokeDashArray() : SVG::StrokeDashArray
+inherits XML::Attribute::attribute2attribute
+when {self.name = 'stroke-dasharray'} {
+	strokeDashArray := getLengths(self.value);
+}
+
+mapping XML::Attribute::attribute2strokeDashOffset() : SVG::StrokeDashOffset
+inherits XML::Attribute::attribute2attribute
+when {self.name = 'stroke-dashoffset'} {
+	strokeDashOffset := getLength(self.value);
+}
+
+mapping XML::Attribute::attribute2clipPathAttribute() : SVG::ClipPathAttribute
+inherits XML::Attribute::attribute2attribute
+when {self.name = 'clip-path'} {
+	clipPath := getLocalIri(self.value);
+}
+
+mapping XML::Attribute::attribute2fontFamily() : SVG::FontFamily
+inherits XML::Attribute::attribute2attribute
+when {self.name = 'font-family'} {
+	fontFamily := self.value;
+}
+
+mapping XML::Attribute::attribute2fontSize() : SVG::FontSize
+inherits XML::Attribute::attribute2attribute
+when {self.name = 'font-size'} {
+	fontSize := getLength(self.value);
+}
+
+mapping XML::Attribute::attribute2transform() : SVG::Transform
+inherits XML::Attribute::attribute2attribute
+when {self.name = 'transform'} {
+	transform := getTransform(self.value);
+}

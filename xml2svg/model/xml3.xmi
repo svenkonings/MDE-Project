@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ASCII"?>
+<modisco.xml:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modisco.xml="http://www.eclipse.org/MoDisco/Xml/0.1.incubation/XML" name="svg">
+  <children xsi:type="modisco.xml:Attribute" name="width" value="120"/>
+  <children xsi:type="modisco.xml:Attribute" name="height" value="120"/>
+  <children xsi:type="modisco.xml:Element" name="defs">
+    <children xsi:type="modisco.xml:Element" name="clipPath">
+      <children xsi:type="modisco.xml:Attribute" name="id" value="myClip"/>
+      <children xsi:type="modisco.xml:Element" name="circle">
+        <children xsi:type="modisco.xml:Attribute" name="cx" value="30"/>
+        <children xsi:type="modisco.xml:Attribute" name="cy" value="30"/>
+        <children xsi:type="modisco.xml:Attribute" name="r" value="20"/>
+      </children>
+      <children xsi:type="modisco.xml:Element" name="circle">
+        <children xsi:type="modisco.xml:Attribute" name="cx" value="70"/>
+        <children xsi:type="modisco.xml:Attribute" name="cy" value="70"/>
+        <children xsi:type="modisco.xml:Attribute" name="r" value="20"/>
+      </children>
+    </children>
+  </children>
+  <children xsi:type="modisco.xml:Element" name="rect">
+    <children xsi:type="modisco.xml:Attribute" name="x" value="10"/>
+    <children xsi:type="modisco.xml:Attribute" name="y" value="10"/>
+    <children xsi:type="modisco.xml:Attribute" name="width" value="100"/>
+    <children xsi:type="modisco.xml:Attribute" name="height" value="100"/>
+    <children xsi:type="modisco.xml:Attribute" name="clip-path" value="url(#myClip)"/>
+  </children>
+  <namespaces name="" value="http://www.w3.org/2000/svg"/>
+</modisco.xml:Root>

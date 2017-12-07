@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/postScript/src" modelPluginID="postScript" modelName="PostScript"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="8.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>postScript.ecore</foreignModel>
+  <genPackages prefix="PostScript" disposableProviderFactory="true" ecorePackage="postScript.ecore#/">
+    <genClasses image="false" ecoreClass="postScript.ecore#//Object">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference postScript.ecore#//Object/program"/>
+    </genClasses>
+    <genClasses ecoreClass="postScript.ecore#//Program">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference postScript.ecore#//Program/object"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//Program/lowerLeftX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//Program/lowerLeftY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//Program/upperRightX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//Program/upperRightY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//Program/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//Program/creator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//Program/creationDate"/>
+    </genClasses>
+    <genClasses ecoreClass="postScript.ecore#//Name">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//Name/value"/>
+    </genClasses>
+    <genClasses ecoreClass="postScript.ecore#//Array">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference postScript.ecore#//Array/objects"/>
+    </genClasses>
+    <genClasses ecoreClass="postScript.ecore#//LiteralName">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//LiteralName/value"/>
+    </genClasses>
+    <genClasses ecoreClass="postScript.ecore#//Procedure"/>
+    <genClasses ecoreClass="postScript.ecore#//DictionaryEntry">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference postScript.ecore#//DictionaryEntry/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference postScript.ecore#//DictionaryEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="postScript.ecore#//Dictionary">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference postScript.ecore#//Dictionary/entries"/>
+    </genClasses>
+    <genClasses ecoreClass="postScript.ecore#//Integer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//Integer/value"/>
+    </genClasses>
+    <genClasses ecoreClass="postScript.ecore#//Real">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//Real/value"/>
+    </genClasses>
+    <genClasses ecoreClass="postScript.ecore#//Boolean">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//Boolean/value"/>
+    </genClasses>
+    <genClasses ecoreClass="postScript.ecore#//String">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute postScript.ecore#//String/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg:Svg xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:svg="http://www.example.org/svg"
+    xsi:schemaLocation="http://www.example.org/svg svg.ecore">
+  <elements
+      xsi:type="svg:Rect">
+    <attributes
+        xsi:type="svg:Stroke">
+      <stroke
+          xsi:type="svg:HexColor"
+          hex="#000"/>
+    </attributes>
+    <attributes
+        xsi:type="svg:Fill">
+      <fill
+          xsi:type="svg:HexColor"
+          hex="#0086B2"/>
+    </attributes>
+    <x number="50"/>
+    <y number="50"/>
+    <width number="100"/>
+    <height
+        number="100"/>
+  </elements>
+  <elements
+      xsi:type="svg:Rect">
+    <attributes
+        xsi:type="svg:Stroke">
+      <stroke
+          xsi:type="svg:HexColor"
+          hex="#000"/>
+    </attributes>
+    <attributes
+        xsi:type="svg:Fill">
+      <fill
+          xsi:type="svg:HexColor"
+          hex="#0086B2"/>
+    </attributes>
+    <attributes
+        xsi:type="svg:Transform">
+      <transform
+          xsi:type="svg:Translate"
+          x="30"/>
+      <transform
+          xsi:type="svg:Rotate"
+          a="45"
+          x="50"
+          y="50"/>
+    </attributes>
+    <x number="50"/>
+    <y number="50"/>
+    <width number="100"/>
+    <height
+        number="100"/>
+  </elements>
+  <elements
+      xsi:type="svg:Text"
+      text="Hello Moz!">
+    <attributes
+        xsi:type="svg:Transform">
+      <transform
+          xsi:type="svg:Translate"
+          x="30"/>
+      <transform
+          xsi:type="svg:Rotate"
+          a="45"
+          x="50"
+          y="50"/>
+    </attributes>
+    <x number="60"/>
+    <y number="105"/>
+  </elements>
+  <width number="180"/>
+  <height number="200"/>
+</svg:Svg>

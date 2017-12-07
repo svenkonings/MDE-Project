@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:postScript="http://www.example.org/postScript">
+  <postScript:Program lowerLeftY="2" upperRightX="3">
+    <object xsi:type="postScript:Name" value="save"/>
+    <object xsi:type="postScript:LiteralName" value="doFill"/>
+    <object xsi:type="postScript:Boolean" value="true"/>
+    <object xsi:type="postScript:Name" value="def"/>
+    <object xsi:type="postScript:LiteralName" value="doStroke"/>
+    <object xsi:type="postScript:Boolean"/>
+    <object xsi:type="postScript:Name" value="def"/>
+    <object xsi:type="postScript:Name" value="save"/>
+    <object xsi:type="postScript:LiteralName" value="doFill"/>
+    <object xsi:type="postScript:Boolean" value="true"/>
+    <object xsi:type="postScript:Name" value="def"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Name" value="setrgbcolor"/>
+    <object xsi:type="postScript:Name" value="newpath"/>
+    <object xsi:type="postScript:Integer"/>
+    <object xsi:type="postScript:Integer"/>
+    <object xsi:type="postScript:Name" value="moveto"/>
+    <object xsi:type="postScript:Integer" value="1"/>
+    <object xsi:type="postScript:Integer"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Integer" value="1"/>
+    <object xsi:type="postScript:Integer" value="2"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Integer"/>
+    <object xsi:type="postScript:Integer" value="2"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Name" value="closepath"/>
+    <object xsi:type="postScript:Name" value="doStroke"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="stroke"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="doFill"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="fill"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="restore"/>
+    <object xsi:type="postScript:Name" value="save"/>
+    <object xsi:type="postScript:LiteralName" value="doFill"/>
+    <object xsi:type="postScript:Boolean" value="true"/>
+    <object xsi:type="postScript:Name" value="def"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Name" value="setrgbcolor"/>
+    <object xsi:type="postScript:Name" value="newpath"/>
+    <object xsi:type="postScript:Integer" value="1"/>
+    <object xsi:type="postScript:Integer"/>
+    <object xsi:type="postScript:Name" value="moveto"/>
+    <object xsi:type="postScript:Integer" value="2"/>
+    <object xsi:type="postScript:Integer"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Integer" value="2"/>
+    <object xsi:type="postScript:Integer" value="2"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Integer" value="1"/>
+    <object xsi:type="postScript:Integer" value="2"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Name" value="closepath"/>
+    <object xsi:type="postScript:Name" value="doStroke"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="stroke"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="doFill"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="fill"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="restore"/>
+    <object xsi:type="postScript:Name" value="save"/>
+    <object xsi:type="postScript:LiteralName" value="doFill"/>
+    <object xsi:type="postScript:Boolean" value="true"/>
+    <object xsi:type="postScript:Name" value="def"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Name" value="setrgbcolor"/>
+    <object xsi:type="postScript:Name" value="newpath"/>
+    <object xsi:type="postScript:Integer" value="2"/>
+    <object xsi:type="postScript:Integer"/>
+    <object xsi:type="postScript:Name" value="moveto"/>
+    <object xsi:type="postScript:Integer" value="3"/>
+    <object xsi:type="postScript:Integer"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Integer" value="3"/>
+    <object xsi:type="postScript:Integer" value="2"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Integer" value="2"/>
+    <object xsi:type="postScript:Integer" value="2"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Name" value="closepath"/>
+    <object xsi:type="postScript:Name" value="doStroke"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="stroke"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="doFill"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="fill"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="restore"/>
+    <object xsi:type="postScript:Name" value="save"/>
+    <object xsi:type="postScript:Name" value="newpath"/>
+    <object xsi:type="postScript:Integer"/>
+    <object xsi:type="postScript:Integer"/>
+    <object xsi:type="postScript:Name" value="moveto"/>
+    <object xsi:type="postScript:Name" value="show"/>
+    <object xsi:type="postScript:Name" value="closepath"/>
+    <object xsi:type="postScript:Name" value="doStroke"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="stroke"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="doFill"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="fill"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="restore"/>
+    <object xsi:type="postScript:Name" value="restore"/>
+  </postScript:Program>
+  <postScript:Integer value="10"/>
+  <postScript:Integer/>
+  <postScript:Name value="moveto"/>
+  <postScript:Integer/>
+  <postScript:Integer value="360"/>
+  <postScript:Name value="arc"/>
+  <postScript:Name value="doStroke"/>
+  <postScript:Procedure>
+    <objects xsi:type="postScript:Name" value="stroke"/>
+  </postScript:Procedure>
+  <postScript:Name value="if"/>
+  <postScript:Name value="doFill"/>
+  <postScript:Procedure>
+    <objects xsi:type="postScript:Name" value="fill"/>
+  </postScript:Procedure>
+  <postScript:Name value="if"/>
+  <postScript:Name value="newpath"/>
+  <postScript:Name value="closepath"/>
+  <postScript:Name value="save"/>
+  <postScript:Name value="restore"/>
+  <postScript:Integer/>
+  <postScript:Integer/>
+  <postScript:Integer/>
+  <postScript:Integer value="1"/>
+  <postScript:Integer value="2"/>
+  <postScript:Integer value="10"/>
+  <postScript:Integer value="10"/>
+  <postScript:Integer/>
+  <postScript:Integer/>
+  <postScript:Integer value="10"/>
+  <postScript:Integer value="1"/>
+  <postScript:Integer value="2"/>
+  <postScript:Integer value="1"/>
+  <postScript:Integer value="2"/>
+  <postScript:Integer value="1"/>
+  <postScript:Integer value="2"/>
+  <postScript:Integer value="150"/>
+  <postScript:Integer value="100"/>
+  <postScript:Integer value="3"/>
+  <postScript:Integer value="2"/>
+</xmi:XMI>

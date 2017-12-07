@@ -1,0 +1,1083 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trace:Trace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:trace="http:///www.eclipse.org/m2m/qvt/operational/trace.ecore">
+  <traceRecords>
+    <mappingOperation name="element2svg" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Svg">
+        <value>
+          <modelElement href="svg.xmi#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2containerElement" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ContainerElement">
+        <value>
+          <modelElement href="svg.xmi#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2structuralElement" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="StructuralElement">
+        <value>
+          <modelElement href="svg.xmi#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2element" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2defs" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Defs">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2containerElement" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ContainerElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2structuralElement" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="StructuralElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2element" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2group" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3/@children.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Group">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0/@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2containerElement" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3/@children.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ContainerElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0/@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2structuralElement" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3/@children.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="StructuralElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0/@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2element" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3/@children.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0/@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2circle" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3/@children.0/@children.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Circle">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0/@elements.0/@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2graphicElement" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3/@children.0/@children.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="GraphicElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0/@elements.0/@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2element" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3/@children.0/@children.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0/@elements.0/@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertGraphicElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3/@children.0/@children.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="GraphicElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0/@elements.0/@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3/@children.0/@children.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0/@elements.0/@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertContainerElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3/@children.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ContainerElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0/@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertStructuralElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3/@children.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="StructuralElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0/@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3/@children.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0/@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertContainerElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ContainerElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertStructuralElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="StructuralElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2rect" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Rect">
+        <value>
+          <modelElement href="svg.xmi#//@elements.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2graphicElement" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="GraphicElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2element" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="attribute2fill" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Attribute">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.4/@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Fill">
+        <value>
+          <modelElement href="svg.xmi#//@elements.1/@attributes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="attribute2attribute" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Attribute">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.4/@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Attribute">
+        <value>
+          <modelElement href="svg.xmi#//@elements.1/@attributes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertAttributes" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Attribute">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.4/@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Attribute">
+        <value>
+          <modelElement href="svg.xmi#//@elements.1/@attributes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertGraphicElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="GraphicElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2rect" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Rect">
+        <value>
+          <modelElement href="svg.xmi#//@elements.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2graphicElement" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="GraphicElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2element" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="attribute2fill" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Attribute">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.5/@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Fill">
+        <value>
+          <modelElement href="svg.xmi#//@elements.2/@attributes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="attribute2attribute" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Attribute">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.5/@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Attribute">
+        <value>
+          <modelElement href="svg.xmi#//@elements.2/@attributes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertAttributes" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Attribute">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.5/@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Attribute">
+        <value>
+          <modelElement href="svg.xmi#//@elements.2/@attributes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertGraphicElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="GraphicElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2rect" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.6"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Rect">
+        <value>
+          <modelElement href="svg.xmi#//@elements.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2graphicElement" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.6"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="GraphicElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2element" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.6"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="attribute2fill" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Attribute">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.6/@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Fill">
+        <value>
+          <modelElement href="svg.xmi#//@elements.3/@attributes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="attribute2attribute" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Attribute">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.6/@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Attribute">
+        <value>
+          <modelElement href="svg.xmi#//@elements.3/@attributes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertAttributes" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Attribute">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.6/@children.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Attribute">
+        <value>
+          <modelElement href="svg.xmi#//@elements.3/@attributes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertGraphicElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.6"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="GraphicElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.6"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2text" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.7"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Text">
+        <value>
+          <modelElement href="svg.xmi#//@elements.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2graphicElement" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.7"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="GraphicElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2element" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.7"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertGraphicElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.7"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="GraphicElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.7"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2use" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.8"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Use">
+        <value>
+          <modelElement href="svg.xmi#//@elements.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2structuralElement" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.8"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="StructuralElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="element2element" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.8"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertStructuralElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.8"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="StructuralElement">
+        <value>
+          <modelElement href="svg.xmi#//@elements.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#//@children.8"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#//@elements.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertContainerElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ContainerElement">
+        <value>
+          <modelElement href="svg.xmi#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertStructuralElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="StructuralElement">
+        <value>
+          <modelElement href="svg.xmi#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="convertElements" package="xml2svg" module="xml2svg"/>
+    <context>
+      <context name="self" type="Element">
+        <value>
+          <modelElement href="platform:/plugin/xml2svg/model/xml.xmi#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Element">
+        <value>
+          <modelElement href="svg.xmi#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+</trace:Trace>

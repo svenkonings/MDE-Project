@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<postScript:Program lowerLeftX="-5" lowerLeftY="-5" 
+ upperRightX="105" upperRightY="105">
+  <object xsi:type="postScript:LiteralName" value="triangle"/>
+  <object xsi:type="postScript:Procedure">
+    <objects xsi:type="postScript:Real" value="0.01"/>
+    <objects xsi:type="postScript:Name" value="setlinewidth"/>
+    <objects xsi:type="postScript:Name" value="newpath"/>
+    <objects xsi:type="postScript:Integer" value="-1"/>
+    <objects xsi:type="postScript:Integer" value="-1"/>
+    <objects xsi:type="postScript:Name" value="moveto"/>
+    <objects xsi:type="postScript:Integer" value="1"/>
+    <objects xsi:type="postScript:Integer" value="-1"/>
+    <objects xsi:type="postScript:Name" value="lineto"/>
+    <objects xsi:type="postScript:Integer"/>
+    <objects xsi:type="postScript:Integer" value="1"/>
+    <objects xsi:type="postScript:Name" value="lineto"/>
+    <objects xsi:type="postScript:Name" value="closepath"/>
+  </object>
+  <object xsi:type="postScript:Name" value="def"/>
+  <object xsi:type="postScript:Name" value="gsave"/>
+  <object xsi:type="postScript:Integer" value="50"/>
+  <object xsi:type="postScript:Integer" value="50"/>
+  <object xsi:type="postScript:Name" value="translate"/>
+  <object xsi:type="postScript:Integer" value="30"/>
+  <object xsi:type="postScript:Integer" value="30"/>
+  <object xsi:type="postScript:Name" value="scale"/>
+  <object xsi:type="postScript:Name" value="triangle"/>
+  <object xsi:type="postScript:Name" value="stroke"/>
+  <object xsi:type="postScript:Name" value="grestore"/>
+  <object xsi:type="postScript:Name" value="gsave"/>
+  <object xsi:type="postScript:Integer" value="50"/>
+  <object xsi:type="postScript:Integer" value="30"/>
+  <object xsi:type="postScript:Name" value="translate"/>
+  <object xsi:type="postScript:Integer" value="30"/>
+  <object xsi:type="postScript:Integer" value="-30"/>
+  <object xsi:type="postScript:Name" value="scale"/>
+  <object xsi:type="postScript:Name" value="triangle"/>
+  <object xsi:type="postScript:Name" value="stroke"/>
+  <object xsi:type="postScript:Name" value="grestore"/>
+</postScript:Program>

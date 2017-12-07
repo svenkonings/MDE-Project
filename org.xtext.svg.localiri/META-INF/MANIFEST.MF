@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.xtext.svg.localiri
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.xtext.svg.localiri; singleton:=true
+Require-Bundle: svg,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.xtext.svg.localiri,
+ org.xtext.svg.localiri.formatting2;uses:="org.eclipse.xtext.formatting2",
+ org.xtext.svg.localiri.generator;uses:="org.eclipse.xtext.generator,org.eclipse.emf.ecore.resource",
+ org.xtext.svg.localiri.parser.antlr;uses:="org.xtext.svg.localiri.parser.antlr.internal,org.eclipse.xtext.parser.antlr,org.xtext.svg.localiri.services",
+ org.xtext.svg.localiri.parser.antlr.internal;x-internal:=true,
+ org.xtext.svg.localiri.scoping,
+ org.xtext.svg.localiri.serializer; uses:="org.eclipse.emf.ecore,  org.eclipse.xtext.nodemodel,  org.eclipse.xtext.serializer.analysis,  svg,  org.xtext.svg.localiri.services,  org.eclipse.xtext.serializer.sequencer,  org.eclipse.xtext,  org.eclipse.xtext.serializer",
+ org.xtext.svg.localiri.services;uses:="org.eclipse.xtext.common.services,org.eclipse.xtext.service,org.eclipse.xtext",
+ org.xtext.svg.localiri.validation
+Import-Package: svg,
+ org.apache.log4j

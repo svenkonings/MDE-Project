@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.xtext.svg.transform
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.xtext.svg.transform; singleton:=true
+Require-Bundle: svg,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.xtext.svg.transform,
+ org.xtext.svg.transform.formatting2;uses:="svg,org.eclipse.xtext.formatting2",
+ org.xtext.svg.transform.generator;uses:="org.eclipse.xtext.generator,org.eclipse.emf.ecore.resource",
+ org.xtext.svg.transform.parser.antlr;uses:="org.xtext.svg.transform.parser.antlr.internal,org.eclipse.xtext.parser.antlr,org.xtext.svg.transform.services",
+ org.xtext.svg.transform.parser.antlr.internal;x-internal:=true,
+ org.xtext.svg.transform.scoping,
+ org.xtext.svg.transform.serializer; uses:="org.eclipse.emf.ecore,  org.eclipse.xtext.nodemodel,  org.eclipse.xtext.serializer.analysis,  svg,  org.xtext.svg.transform.services,  org.eclipse.xtext.serializer.sequencer,  org.eclipse.xtext,  org.eclipse.xtext.serializer",
+ org.xtext.svg.transform.services;uses:="org.eclipse.xtext.common.services,org.eclipse.xtext.service,org.eclipse.xtext",
+ org.xtext.svg.transform.validation
+Import-Package: svg,
+ org.apache.log4j

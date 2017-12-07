@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:postScript="http://www.example.org/postScript">
+  <postScript:Program lowerLeftY="200" upperRightX="180">
+    <object xsi:type="postScript:Name" value="save"/>
+    <object xsi:type="postScript:LiteralName" value="doFill"/>
+    <object xsi:type="postScript:Boolean" value="true"/>
+    <object xsi:type="postScript:Name" value="def"/>
+    <object xsi:type="postScript:LiteralName" value="doStroke"/>
+    <object xsi:type="postScript:Boolean"/>
+    <object xsi:type="postScript:Name" value="def"/>
+    <object xsi:type="postScript:Name" value="save"/>
+    <object xsi:type="postScript:LiteralName" value="doStroke"/>
+    <object xsi:type="postScript:Boolean" value="true"/>
+    <object xsi:type="postScript:Name" value="def"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Name" value="setrgbcolor"/>
+    <object xsi:type="postScript:LiteralName" value="doFill"/>
+    <object xsi:type="postScript:Boolean" value="true"/>
+    <object xsi:type="postScript:Name" value="def"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Name" value="setrgbcolor"/>
+    <object xsi:type="postScript:Name" value="newpath"/>
+    <object xsi:type="postScript:Integer" value="50"/>
+    <object xsi:type="postScript:Integer" value="50"/>
+    <object xsi:type="postScript:Name" value="moveto"/>
+    <object xsi:type="postScript:Integer" value="150"/>
+    <object xsi:type="postScript:Integer" value="50"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Integer" value="150"/>
+    <object xsi:type="postScript:Integer" value="150"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Integer" value="50"/>
+    <object xsi:type="postScript:Integer" value="150"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Name" value="closepath"/>
+    <object xsi:type="postScript:Name" value="doStroke"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="stroke"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="doFill"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="fill"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="restore"/>
+    <object xsi:type="postScript:Name" value="save"/>
+    <object xsi:type="postScript:LiteralName" value="doStroke"/>
+    <object xsi:type="postScript:Boolean" value="true"/>
+    <object xsi:type="postScript:Name" value="def"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Name" value="setrgbcolor"/>
+    <object xsi:type="postScript:LiteralName" value="doFill"/>
+    <object xsi:type="postScript:Boolean" value="true"/>
+    <object xsi:type="postScript:Name" value="def"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Real"/>
+    <object xsi:type="postScript:Name" value="setrgbcolor"/>
+    <object xsi:type="postScript:Name" value="newpath"/>
+    <object xsi:type="postScript:Integer" value="50"/>
+    <object xsi:type="postScript:Integer" value="50"/>
+    <object xsi:type="postScript:Name" value="moveto"/>
+    <object xsi:type="postScript:Integer" value="150"/>
+    <object xsi:type="postScript:Integer" value="50"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Integer" value="150"/>
+    <object xsi:type="postScript:Integer" value="150"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Integer" value="50"/>
+    <object xsi:type="postScript:Integer" value="150"/>
+    <object xsi:type="postScript:Name" value="lineto"/>
+    <object xsi:type="postScript:Name" value="closepath"/>
+    <object xsi:type="postScript:Name" value="doStroke"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="stroke"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="doFill"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="fill"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="restore"/>
+    <object xsi:type="postScript:Name" value="save"/>
+    <object xsi:type="postScript:Name" value="newpath"/>
+    <object xsi:type="postScript:Integer" value="60"/>
+    <object xsi:type="postScript:Integer" value="105"/>
+    <object xsi:type="postScript:Name" value="moveto"/>
+    <object xsi:type="postScript:Name" value="show"/>
+    <object xsi:type="postScript:Name" value="closepath"/>
+    <object xsi:type="postScript:Name" value="doStroke"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="stroke"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="doFill"/>
+    <object xsi:type="postScript:Procedure">
+      <objects xsi:type="postScript:Name" value="fill"/>
+    </object>
+    <object xsi:type="postScript:Name" value="if"/>
+    <object xsi:type="postScript:Name" value="restore"/>
+    <object xsi:type="postScript:Name" value="restore"/>
+  </postScript:Program>
+  <postScript:Integer value="50"/>
+  <postScript:Integer value="50"/>
+  <postScript:Integer value="50"/>
+  <postScript:Integer value="50"/>
+  <postScript:Integer value="60"/>
+  <postScript:Integer value="105"/>
+  <postScript:Integer value="100"/>
+  <postScript:Integer value="100"/>
+  <postScript:Integer value="100"/>
+  <postScript:Integer value="100"/>
+  <postScript:Integer value="180"/>
+  <postScript:Integer value="200"/>
+</xmi:XMI>
